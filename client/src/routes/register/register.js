@@ -70,7 +70,7 @@ function Register() {
         <FormHelperText>{help}</FormHelperText>
       </FormControl>
       <div>
-        Already have an account ? Let's move <Link to="/register">there</Link> !
+        Already have an account ? Let's move <Link to="/login">there</Link> !
       </div>
     </div>
   );

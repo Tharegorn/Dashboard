@@ -1,0 +1,9 @@
+footer {
+    color: red;
+  background: #ccc;
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  width: 100%;
+  /* height: 50px; */
+}
