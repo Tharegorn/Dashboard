@@ -4,6 +4,8 @@ services:
     user_api:
         build:
             context: ./server_user
+        environment:
+          JWT_TOKEN: test
         links:
             - db:database
         depends_on:

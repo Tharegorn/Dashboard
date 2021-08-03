@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import {
   Button,
   FormHelperText,
   TextField,
   FormControl,
 } from "@material-ui/core";
+import { loginUser } from "../../requests/user_requests";
 
 function Login() {
   const [pass, setPass] = useState("");
   const [error, setError] = useState(false);
   const [user, setUser] = useState("");
   const [help, setHelp] = useState("Please fill username and password.");
+  const [regis, setRegis] = useState(false);
 
   function Check_login() {
     if (user === "") {
@@ -24,8 +26,18 @@ function Login() {
       setHelp("Password can't be empty !");
       return;
     }
-    console.log(pass, user);
+    loginUser(user, pass).then((response) => {
+      setError(false)
+      setRegis(true)
+      console.log(response)
+    }).catch((err) => {
+      console.log(err)
+      setError(true)
+      setHelp("Problème")
+    })
   }
+  if (regis === true)
+    return (<Redirect to="/"/>)
   return (
     <div>
       <FormControl error={error} variant="filled">

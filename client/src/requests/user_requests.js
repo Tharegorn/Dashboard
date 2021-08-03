@@ -8,6 +8,14 @@ function createUser(name, pass) {
     })
 }
 
+function loginUser(name, pass) {
+    return new Promise(function (resolve, reject) {
+        axios.post('http://localhost:4242/login', { name: name, pass: pass }).then(res => {
+            resolve(res)
+        }).catch((err) => setImmediate(() => { reject(err) }))
+    })
+}
 export {
     createUser,
+    loginUser,
 }

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import {
   Button,
   FormHelperText,
   TextField,
   FormControl,
 } from "@material-ui/core";
-import "../../requests/user_requests"
+import "../../requests/user_requests";
 import { createUser } from "../../requests/user_requests";
 
 function Register() {
@@ -15,8 +15,9 @@ function Register() {
   const [error, setError] = useState(false);
   const [user, setUser] = useState("");
   const [help, setHelp] = useState("Please fill username and password.");
+  const [regis, setRegis] = useState(false);
 
-  function Check_register() {
+  async function Check_register() {
     if (user === "") {
       setError(true);
       setHelp("Username can't be empty !");
@@ -32,13 +33,19 @@ function Register() {
       setHelp("Password and confirm password must be the sames !");
       return;
     }
-    createUser(user, pass).then(res => {
-      setError(false)
-    }).catch((err) => setImmediate(() => {
-      setError(true)
-      setHelp("Le nom d'utilisateur existe déjà !");
-    }));
+    createUser(user, pass)
+      .then((res) => {
+        setError(false);
+        setRegis(true);
+      })
+      .catch((err) =>
+        setImmediate(() => {
+          setError(true);
+          setHelp("Le nom d'utilisateur existe déjà !");
+        })
+      );
   }
+  if (regis === true) return <Redirect to="/" />;
   return (
     <div>
       <FormControl error={error} variant="filled">
