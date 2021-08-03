@@ -1,11 +1,22 @@
 import React from "react";
-import "./header.css"
+import { useLocation } from "react-router-dom";
+import "./header.css";
+
 function Header() {
-  return (
-    <header>
-      <p>Header !</p>
-    </header>
-  );
+  const location = useLocation();
+  if (location.pathname === "/") {
+    return (
+      <header>
+        <p>Home header !</p>
+      </header>
+    );
+  } else {
+    return (
+      <header>
+        <p> Generic Header !</p>
+      </header>
+    );
+  }
 }
 
 export default Header;

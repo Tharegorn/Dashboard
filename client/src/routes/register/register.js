@@ -6,6 +6,8 @@ import {
   TextField,
   FormControl,
 } from "@material-ui/core";
+import "../../requests/user_requests"
+import { createUser } from "../../requests/user_requests";
 
 function Register() {
   const [pass, setPass] = useState("");
@@ -30,6 +32,12 @@ function Register() {
       setHelp("Password and confirm password must be the sames !");
       return;
     }
+    createUser(user, pass).then(res => {
+      setError(false)
+    }).catch((err) => setImmediate(() => {
+      setError(true)
+      setHelp("Le nom d'utilisateur existe déjà !");
+    }));
   }
   return (
     <div>
