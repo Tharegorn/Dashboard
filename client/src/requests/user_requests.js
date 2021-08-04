@@ -15,7 +15,16 @@ function loginUser(name, pass) {
         }).catch((err) => setImmediate(() => { reject(err) }))
     })
 }
+
+function verify(token) {
+    return new Promise(function (resolve, reject) {
+        axios.post('http://localhost:4242/verify', { token: token }).then(res => {
+            resolve(res)
+        }).catch((err) => setImmediate(() => { reject(err) }))
+    })
+}
 export {
     createUser,
     loginUser,
+    verify,
 }

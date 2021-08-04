@@ -26,18 +26,19 @@ function Login() {
       setHelp("Password can't be empty !");
       return;
     }
-    loginUser(user, pass).then((response) => {
-      setError(false)
-      setRegis(true)
-      console.log(response)
-    }).catch((err) => {
-      console.log(err)
-      setError(true)
-      setHelp("Problème")
-    })
+    loginUser(user, pass)
+      .then((response) => {
+        setError(false);
+        localStorage.setItem("session_id", response.data.data.token);
+        setRegis(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(true);
+        setHelp("Problème");
+      });
   }
-  if (regis === true)
-    return (<Redirect to="/"/>)
+  if (regis === true) return <Redirect to="/" />;
   return (
     <div>
       <FormControl error={error} variant="filled">
@@ -61,7 +62,9 @@ function Login() {
             setPass(e.target.value);
           }}
         />
-        <Button onClick={Check_login} variant="contained" color="primary">Log in !</Button>
+        <Button onClick={Check_login} variant="contained" color="primary">
+          Log in !
+        </Button>
         <FormHelperText>{help}</FormHelperText>
       </FormControl>
       <div>
