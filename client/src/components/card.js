@@ -39,6 +39,8 @@ export default function Elem() {
   const [type, setType] = useState(0);
   const [data, setData] = useState("");
   let label;
+  let activate;
+
   if (type !== 0) {
     label = (
       <TextField
@@ -49,8 +51,14 @@ export default function Elem() {
         }}
       ></TextField>
     );
+    activate = (
+      <CardActions>
+        <Button size="small">Activate</Button>
+      </CardActions>
+    );
   } else {
     label = <div></div>;
+    activate = <div></div>;
   }
 
   return (
@@ -64,7 +72,7 @@ export default function Elem() {
           >
             Select widget {type}
           </Typography>
-          <InputLabel>Age</InputLabel>
+          <InputLabel>Type</InputLabel>
           <Select
             value={type}
             onChange={(e) => {
@@ -79,9 +87,7 @@ export default function Elem() {
           </Select>
           {label}
         </CardContent>
-        <CardActions>
-          <Button size="small">Learn More</Button>
-        </CardActions>
+        {activate}
       </form>
     </Card>
   );

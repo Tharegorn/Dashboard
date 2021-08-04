@@ -1,20 +1,24 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import Elem from "../../components/card";
-import { InputLabel } from "@material-ui/core";
-
+import "./home.css"
 function Home() {
   const sid = localStorage.getItem("session_id");
-  const [compos, setCompo] = useState([]);
+  const [compos, setComp] = useState([<Elem />])
+  let bite = compos.map((n, index) => <div className="unique" id={index}>{n}</div>);
+
+  function addcp() {
+    setComp([...compos, <Elem />])
+  }
 
   if (sid) {
     return (
       <div>
         Dashboard
         <div className="compo">
-          <Elem />
+          {bite}
         </div>
-        <Button>click</Button>
+        <Button onClick={addcp}>click</Button>
       </div>
     );
   } else {
