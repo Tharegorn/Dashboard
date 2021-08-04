@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import Elem from "../../components/card";
+import { InputLabel } from "@material-ui/core";
 
 function Home() {
   const sid = localStorage.getItem("session_id");
   const [compos, setCompo] = useState([]);
+
   if (sid) {
     return (
       <div>
