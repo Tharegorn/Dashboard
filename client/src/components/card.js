@@ -34,13 +34,12 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Elem() {
+export default function Elem(props) {
   const classes = useStyles();
   const [type, setType] = useState(0);
   const [data, setData] = useState("");
   let label;
   let activate;
-
   if (type !== 0) {
     label = (
       <TextField
@@ -70,7 +69,7 @@ export default function Elem() {
             color="textSecondary"
             gutterBottom
           >
-            Select widget {type}
+            Select widget {props.id}
           </Typography>
           <InputLabel>Type</InputLabel>
           <Select
@@ -88,6 +87,9 @@ export default function Elem() {
           {label}
         </CardContent>
         {activate}
+        <CardActions>
+          <Button size="small" onClick={(e) => {e.preventDefault(); console.log(props.id); document.getElementById("" + props.id + "").remove();}}>Delete</Button>
+        </CardActions>
       </form>
     </Card>
   );

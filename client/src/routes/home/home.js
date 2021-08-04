@@ -4,21 +4,21 @@ import Elem from "../../components/card";
 import "./home.css"
 function Home() {
   const sid = localStorage.getItem("session_id");
-  const [compos, setComp] = useState([<Elem />])
-  let bite = compos.map((n, index) => <div className="unique" id={index}>{n}</div>);
+  const [compos, setComp] = useState([])
+  let bite = compos.map((n, index) => <div className="unique" key={index} id={index}>{n}</div>);
 
   function addcp() {
-    setComp([...compos, <Elem />])
+    setComp([...compos, <Elem id={compos.length}/>])
   }
 
   if (sid) {
     return (
       <div>
         Dashboard
+        <Button onClick={addcp}>click</Button>
         <div className="compo">
           {bite}
         </div>
-        <Button onClick={addcp}>click</Button>
       </div>
     );
   } else {
