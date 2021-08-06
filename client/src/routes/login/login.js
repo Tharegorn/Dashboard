@@ -6,7 +6,6 @@ import {
   FormControl,
 } from "@material-ui/core";
 import { loginUser } from "../../requests/user_requests";
-import "./login.css";
 
 function Login() {
   const [pass, setPass] = useState("");
