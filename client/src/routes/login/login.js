@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Redirect, Link } from "react-router-dom";
 import {
-  Button,
   FormHelperText,
   TextField,
   FormControl,
 } from "@material-ui/core";
 import { loginUser } from "../../requests/user_requests";
+import "./login.css";
 
 function Login() {
   const [pass, setPass] = useState("");
@@ -40,36 +40,49 @@ function Login() {
   }
   if (regis === true) return <Redirect to="/" />;
   return (
-    <div>
-      <FormControl error={error} variant="filled">
-        <TextField
-          label="Username"
-          error={error}
-          type="Username"
-          variant="filled"
-          value={user}
-          onChange={(e) => {
-            setUser(e.target.value);
-          }}
-        />
-        <TextField
-          label="Password"
-          error={error}
-          type="password"
-          variant="filled"
-          value={pass}
-          onChange={(e) => {
-            setPass(e.target.value);
-          }}
-        />
-        <Button onClick={Check_login} variant="contained" color="primary">
-          Log in !
-        </Button>
-        <FormHelperText>{help}</FormHelperText>
+    <div className="login" >
+      <FormControl className="login-form" error={error} variant="filled">
+        <h1>SIGN IN</h1>
+        <div className="textb">
+          <TextField
+            className="text"
+            label="Username"
+            error={error}
+            type="Username"
+            value={user}
+            formControlProps={{
+              fullWidth: true,
+            }}
+            onChange={(e) => {
+              setUser(e.target.value);
+            }}
+          />
+        </div>
+        <div className="textb">
+          <TextField
+            className="text"
+            label="Password"
+            error={error}
+            type="password"
+            value={pass}
+            formControlProps={{
+              fullWidth: true,
+            }}
+            onChange={(e) => {
+              setPass(e.target.value);
+            }}
+          />
+        </div>
+        <div className="helper">
+          <FormHelperText>{help}</FormHelperText>
+        </div>
+        <button className="btn fas fa-arrow-right" onClick={Check_login}>
+          Log In
+        </button>
+        <Link className="sign" to="/register">
+          Can't Sign in?
+        </Link>
       </FormControl>
-      <div>
-        First time you'r here ? Let's <Link to="/register">join</Link> us !
-      </div>
     </div>
   );
 }
