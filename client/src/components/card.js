@@ -11,6 +11,7 @@ import {
   CardContent,
   Button,
 } from "@material-ui/core/";
+import { getWeather } from "../requests/weather_requests"
 
 const useStyles = makeStyles({
   root: {
@@ -34,12 +35,25 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Elem(props) {
+function Elem(props) {
   const classes = useStyles();
   const [type, setType] = useState(0);
   const [data, setData] = useState("");
+  const [weather, setWeath] = useState("");
   let label;
   let activate;
+  let button = <CardActions>
+    <Button size="small" onClick={(e) => { e.preventDefault(); document.getElementById("" + props.id + "").remove(); }}>Delete</Button>
+  </CardActions>;
+
+  function activ() {
+    getWeather().then((res) => {
+      console.log(res)
+      setWeath(res.data.data.value)
+    }).catch((err) => {
+      throw err;
+    })
+  }
   if (type !== 0) {
     label = (
       <TextField
@@ -52,7 +66,7 @@ export default function Elem(props) {
     );
     activate = (
       <CardActions>
-        <Button size="small">Activate</Button>
+        <Button size="small" onClick={activ} >Activate</Button>
       </CardActions>
     );
   } else {
@@ -69,7 +83,7 @@ export default function Elem(props) {
             color="textSecondary"
             gutterBottom
           >
-            Select widget {props.id}
+            Select widget {props.id}{weather}
           </Typography>
           <InputLabel>Type</InputLabel>
           <Select
@@ -87,10 +101,10 @@ export default function Elem(props) {
           {label}
         </CardContent>
         {activate}
-        <CardActions>
-          <Button size="small" onClick={(e) => {e.preventDefault(); console.log(props.id); document.getElementById("" + props.id + "").remove();}}>Delete</Button>
-        </CardActions>
+        {button}
       </form>
     </Card>
   );
 }
+
+export default Elem;
