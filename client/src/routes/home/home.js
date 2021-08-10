@@ -8,7 +8,7 @@ function Home() {
   let bite = compos.map((n, index) => <div className="unique" key={index} id={index}>{n}</div>);
 
   function addcp() {
-    setComp([...compos, <Elem id={compos.length}/>])
+    setComp([...compos, <Elem key={compos.length} id={compos.length}/>])
   }
 
   if (sid) {
