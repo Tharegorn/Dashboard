@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core/";
 import { getWeather } from "../requests/weather_requests"
 import { widgets } from "./data.js"
+import Weather from "./weather.js"
 
 const useStyles = makeStyles({
   root: {
@@ -39,20 +40,27 @@ const useStyles = makeStyles({
 function Elem(props) {
   const classes = useStyles();
   const [type, setType] = useState(0);
-  const [data, setData] = useState({});
-  const [weather, setWeath] = useState("");
+  const [compo, setCompo] = useState(<div></div>);
+  var data = {}
   let activate;
   let button = <CardActions>
     <Button size="small" onClick={(e) => { e.preventDefault(); document.getElementById("" + props.id + "").remove(); }}>Delete</Button>
   </CardActions>;
 
   function activ() {
-    getWeather().then((res) => {
-      console.log(res)
-      setWeath(res.data.data.value)
-    }).catch((err) => {
-      throw err;
-    })
+    switch (type) {
+      case 1:
+        getWeather(data).then((res) => {
+          console.log(res.data)
+          setCompo(<Weather temp={res.data.temp} city={res.data.city} desc={res.data.desc}/>)
+        }).catch((err) => {
+          setCompo(<Weather msg="Ville inconnue"/>)
+          throw err;
+        })
+        break;
+      default:
+        break;
+    }
   }
   if (type !== 0) {
     activate = (
@@ -66,29 +74,29 @@ function Elem(props) {
 
   return (
     <Card className={classes.root}>
-      <form>
         <CardContent>
           <Typography
             className={classes.title}
             color="textSecondary"
             gutterBottom
           >
-            Select widget {props.id}{weather}
+            Select widget {props.id}
           </Typography>
           <InputLabel>Type</InputLabel>
           <Select
             value={type}
             onChange={(e) => {
               setType(e.target.value);
+              data = {}
             }}
           >
-             {widgets.map((item) => (<MenuItem value={item.id}>{item.name}</MenuItem>))}
+            {widgets.map((item) => (<MenuItem value={item.id}>{item.name}</MenuItem>))}
           </Select>
-          {widgets.map((item) => (item.fields))[type].map((second, index) => (<TextField key={index} label={second} onChange={(e) => {e.preventDefault();}}/>))}
+          {widgets.map((item) => (item.fields))[type].map((second, index) => (<TextField key={index} label={second} name={second} onChange={(e) => { e.preventDefault(); data[second] = e.target.value; }} />))}
         </CardContent>
         {activate}
         {button}
-      </form>
+        {compo}
     </Card>
   );
 }

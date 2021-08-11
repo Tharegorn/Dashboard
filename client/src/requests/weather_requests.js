@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-function getWeather() {
+function getWeather(data) {
     return new Promise(function (resolve, reject) {
-        axios.post('http://localhost:4243/weather', {}).then(res => {
+        axios.post('http://localhost:4243/weather', {data}).then(res => {
             resolve(res);
         }).catch((err) => setImmediate(() => { reject(err) }))
     })
