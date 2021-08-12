@@ -11,9 +11,10 @@ import {
   CardContent,
   Button,
 } from "@material-ui/core/";
-import { getWeather } from "../requests/weather_requests"
+import { getWeather, getChannel } from "../requests/apis_requests"
 import { widgets } from "./data.js"
 import Weather from "./weather.js"
+import Youtube from "./youtube.js"
 
 const useStyles = makeStyles({
   root: {
@@ -46,15 +47,20 @@ function Elem(props) {
   let button = <CardActions>
     <Button size="small" onClick={(e) => { e.preventDefault(); document.getElementById("" + props.id + "").remove(); }}>Delete</Button>
   </CardActions>;
-
   function activ() {
     switch (type) {
       case 1:
         getWeather(data).then((res) => {
-          console.log(res.data)
           setCompo(<Weather temp={res.data.temp} city={res.data.city} desc={res.data.desc}/>)
         }).catch((err) => {
           setCompo(<Weather msg="Ville inconnue"/>)
+          throw err;
+        })
+        break;
+      case 3:
+        getChannel(data).then((res) => {
+          setCompo(<Youtube name={res.data.name} thumbnail={res.data.thumbnail} id={res.data.id} views={res.data.views} subs={res.data.subs} vids={res.data.vids}/>)
+        }).catch((err) => {
           throw err;
         })
         break;
@@ -92,7 +98,7 @@ function Elem(props) {
           >
             {widgets.map((item) => (<MenuItem value={item.id}>{item.name}</MenuItem>))}
           </Select>
-          {widgets.map((item) => (item.fields))[type].map((second, index) => (<TextField key={index} label={second} name={second} onChange={(e) => { e.preventDefault(); data[second] = e.target.value; }} />))}
+          {widgets.map((item) => (item.fields))[type].map((second, index) => (<TextField key={index} label={second} name={second} onChange={(e) => { e.preventDefault(); data[second] = e.target.value; console.log(data)}} />))}
         </CardContent>
         {activate}
         {button}
