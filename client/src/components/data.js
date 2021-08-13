@@ -20,9 +20,4 @@ export const widgets =
             name: "YouTube",
             fields: ["Channel"],
         },
-        {
-            id: 4,
-            name: "Caca",
-            fields: ["Coulant", "Tout dur", "Moisi du fiak"],
-        },
     ]
