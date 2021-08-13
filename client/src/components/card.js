@@ -11,10 +11,11 @@ import {
   CardContent,
   Button,
 } from "@material-ui/core/";
-import { getWeather, getChannel } from "../requests/apis_requests"
+import { getWeather, getChannel, getCurrency } from "../requests/apis_requests"
 import { widgets } from "./data.js"
 import Weather from "./weather/weather.js"
 import Youtube from "./youtube/youtube.js"
+import Currency from "./currency/currency"
 
 const useStyles = makeStyles({
   root: {
@@ -56,6 +57,14 @@ function Elem(props) {
           throw err;
         })
         break;
+      case 2:
+        getCurrency(data).then((res) => {
+          setCompo(<Currency amount={res.data.amount} currency={res.data.currency}/>)
+        }).catch((err) => {
+          setCompo(<Currency amount="ERROR"/>)
+          throw err;
+        })
+      break;
       case 3:
         getChannel(data).then((res) => {
           setCompo(<Youtube name={res.data.name} thumbnail={res.data.thumbnail} id={res.data.id} views={res.data.views} subs={res.data.subs} vids={res.data.vids} />)

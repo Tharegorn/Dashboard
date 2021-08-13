@@ -48,6 +48,7 @@ async function getInfoWithMdp(conn, name, pass) {
         code: 0,
         name: req[0].name,
         id: req[0].id,
+        perm: req[0].perm,
       }));
     else return (result = await Promise.resolve({ code: 1 }));
   } else return (result = await Promise.resolve({ code: 1 }));
@@ -110,7 +111,7 @@ async function createConnection() {
           const rdm = token_gen(25);
           addToken(conn, rdm, response.id);
           const token = jwt.sign(
-            { name: response.name, token: rdm },
+            { name: response.name, token: rdm, perm: response.perm },
             process.env.JWT_TOKEN,
             {}
           );

@@ -13,7 +13,7 @@ export const widgets =
         {
             id: 2,
             name: "Currency",
-            fields: ["From", "To", "Value"],
+            fields: ["From", "To", "Amount"],
         },
         {
             id: 3,

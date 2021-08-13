@@ -13,6 +13,7 @@ ALTER TABLE `users`
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
+INSERT INTO `users` (name, password, perm) VALUES ('Tharegorn', '$2b$10$P2gSTINYdOiQUR.rJCbrXOvQc14UfdiDkI5/LIfakNWWAO3F9/kLG', '1');
 CREATE TABLE `tokens` (
   `token_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,

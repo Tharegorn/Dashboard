@@ -5,7 +5,7 @@ import "./home.css"
 function Home() {
   const sid = localStorage.getItem("session_id");
   const [compos, setComp] = useState([])
-  let bite = compos.map((n, index) => <div className="unique" key={index} id={index}>{n}</div>);
+  let Widgets = compos.map((n, index) => <div className="unique" key={index} id={index}>{n}</div>);
 
   function addcp() {
     setComp([...compos, <Elem key={compos.length} id={compos.length}/>])
@@ -17,7 +17,7 @@ function Home() {
         Dashboard
         <Button onClick={addcp}>click</Button>
         <div className="compo">
-          {bite}
+          {Widgets}
         </div>
       </div>
     );
