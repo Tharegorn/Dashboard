@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import Elem from "../../components/card";
 import "./home.css"
@@ -10,7 +10,6 @@ function Home() {
   function addcp() {
     setComp([...compos, <Elem key={compos.length} id={compos.length}/>])
   }
-
   if (sid) {
     return (
       <div>
@@ -23,14 +22,19 @@ function Home() {
     );
   } else {
     return (
-      <div>
+      <div className="login" >
+        <h1>Blue or red ?</h1>
+        <div className="textb">
+        </div>
+        <div className="textb">
+        </div>
         <Button variant="contained" color="primary" href="/register">
           Register
         </Button>
-        <Button variant="contained" color="primary" href="/login">
+        <Button variant="contained" color="secondary" href="/login">
           Login
         </Button>
-      </div>
+    </div>
     );
   }
 }

@@ -1,16 +1,26 @@
-import React from 'react';
-import {Redirect} from 'react-router-dom'
-import jwt_decode from "jwt-decode";
+import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom'
+import { checkAdmin } from '../../requests/user_requests'
 
 function Admin() {
-  const sid = localStorage.getItem("session_id");
+    const sid = localStorage.getItem("session_id");
+    const [res, setRed] = useState()
 
-    if (!sid)
-        return <Redirect to="/" />
-    if (jwt_decode(sid).perm !== 1)
-        return <Redirect to='/' />
-    else
-        return (<h1>Admin page</h1>)
+    useEffect((sid) => {
+        if (!sid)
+            setRed(false)
+        else {
+            checkAdmin(sid).then((res) => {
+                console.log("avav")
+                setRed(true)
+            }).catch((err) => {
+                setRed(false)
+            })
+        }
+    }, [])
+    if (res === false)
+        return (<Redirect to='/' />)
+    return (<h1>Admin page</h1>)
 }
 
 export default Admin;
