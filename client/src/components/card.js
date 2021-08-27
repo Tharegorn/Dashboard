@@ -59,12 +59,12 @@ function Elem(props) {
         break;
       case 2:
         getCurrency(data).then((res) => {
-          setCompo(<Currency amount={res.data.amount} currency={res.data.currency}/>)
+          setCompo(<Currency amount={res.data.amount} currency={res.data.currency} />)
         }).catch((err) => {
-          setCompo(<Currency amount="ERROR"/>)
+          setCompo(<Currency amount="ERROR" />)
           throw err;
         })
-      break;
+        break;
       case 3:
         getChannel(data).then((res) => {
           setCompo(<Youtube name={res.data.name} thumbnail={res.data.thumbnail} id={res.data.id} views={res.data.views} subs={res.data.subs} vids={res.data.vids} />)
