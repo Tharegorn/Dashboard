@@ -148,6 +148,11 @@ async function createConnection() {
         }
       });
     });
+    app.post("/adminLoadUsers", (req, res) => {
+      console.log("revceived")
+      res.set("Content-Type", "application/json");
+      res.status(500).json({status: "Failure", code: 500});
+    })
   } catch (err) {
     throw err;
   }

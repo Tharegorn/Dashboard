@@ -23,8 +23,17 @@ function verify(token) {
         }).catch((err) => setImmediate(() => { reject(err) }))
     })
 }
+
+function checkAdmin(token) {
+    return new Promise(function (resolve, reject) {
+        axios.post('http://localhost:4242/adminLoadUsers', { token: token }).then(res => {
+            resolve(res)
+        }).catch((err) => setImmediate(() => { reject(err) }))
+    })
+}
 export {
     createUser,
     loginUser,
     verify,
+    checkAdmin,
 }
