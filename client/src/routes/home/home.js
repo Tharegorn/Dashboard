@@ -8,7 +8,7 @@ function Home() {
   let Widgets = compos.map((n, index) => <div className="unique" key={index} id={index}>{n}</div>);
 
   function addcp() {
-    setComp([...compos, <Elem key={compos.length} id={compos.length}/>])
+    setComp([...compos, <Elem key={compos.length} id={compos.length} />])
   }
   if (sid) {
     return (
@@ -34,7 +34,7 @@ function Home() {
         <Button variant="contained" color="secondary" href="/login">
           Login
         </Button>
-    </div>
+      </div>
     );
   }
 }

@@ -10,7 +10,9 @@ import {
   Typography,
   CardContent,
   Button,
+  Popover,
 } from "@material-ui/core/";
+import {HelpOutline} from '@material-ui/icons';
 import { getWeather, getChannel, getCurrency } from "../requests/apis_requests"
 import { widgets } from "./data.js"
 import Weather from "./weather/weather.js"
@@ -47,6 +49,17 @@ function Elem(props) {
   let activate;
   let searchfield;
   let edit = <div></div>;
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
   function activ() {
     switch (type) {
       case 1:
@@ -69,6 +82,7 @@ function Elem(props) {
         getChannel(data).then((res) => {
           setCompo(<Youtube name={res.data.name} thumbnail={res.data.thumbnail} id={res.data.id} views={res.data.views} subs={res.data.subs} vids={res.data.vids} />)
         }).catch((err) => {
+          setCompo(<Youtube name="ERROR" />)
           throw err;
         })
         break;
@@ -97,6 +111,23 @@ function Elem(props) {
       >
         {widgets.map((item) => (<MenuItem value={item.id}>{item.name}</MenuItem>))}
       </Select>
+      {type != 0 ? <button aria-describedby={id} onClick={handleClick}><HelpOutline/></button> : <div></div>}
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+      >
+        <Typography>{widgets.map((item) => (item.description))[type]}</Typography>
+      </Popover>
       {widgets.map((item) => (item.fields))[type].map((second, index) => (<TextField key={index} label={second} name={second} onChange={(e) => { e.preventDefault(); data[second] = e.target.value; }} />))}</div>
   } else {
     edit = <Button size="small" onClick={(e) => { e.preventDefault(); setCompo(null) }}>Edit</Button>
@@ -119,7 +150,7 @@ function Elem(props) {
       <CardActions>
         {edit}
         <Button size="small" onClick={(e) => { e.preventDefault(); document.getElementById("" + props.id + "").remove(); }}>Delete</Button>
-      </CardActions>;
+      </CardActions>
     </Card>
   );
 }
