@@ -5,6 +5,7 @@ import {
   TextField,
   FormControl,
 } from "@material-ui/core";
+import { GitHub, Facebook, LinkedIn } from "@material-ui/icons"
 import { loginUser } from "../../requests/user_requests";
 
 function Login() {
@@ -78,6 +79,11 @@ function Login() {
         <button className="btn fas fa-arrow-right" onClick={Check_login}>
           Log In
         </button>
+        <div>
+          <GitHub />
+          <Facebook />
+          <LinkedIn />
+        </div>
         <Link className="sign" to="/register">
           Can't Sign in?
         </Link>

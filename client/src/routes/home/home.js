@@ -1,20 +1,30 @@
 import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import Elem from "../../components/card";
+import { check_token } from "../../requests/user_requests";
 import "./home.css"
 function Home() {
-  const sid = localStorage.getItem("session_id");
   const [compos, setComp] = useState([])
+  const [redir, setRedir] = useState()
   let Widgets = compos.map((n, index) => <div className="unique" key={index} id={index}>{n}</div>);
 
   function addcp() {
     setComp([...compos, <Elem key={compos.length} id={compos.length} />])
   }
-  if (sid) {
+  useEffect(() => {
+    var token = localStorage.getItem("session_id");
+    check_token(token).then((res) => {
+      setRedir(true)
+    }).catch((err) => {
+      localStorage.removeItem("session_id");
+      setRedir(false)
+    })
+  }, [])
+  console.log(redir)
+  if (redir === true) {
     return (
       <div>
-        Dashboard
-        <Button onClick={addcp}>click</Button>
+        <Button variant="contained" color="primary" onClick={addcp}>Add a new Widget</Button>
         <div className="compo">
           {Widgets}
         </div>
