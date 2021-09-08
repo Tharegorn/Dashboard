@@ -57,10 +57,10 @@ async function addUser(conn, name, password) {
   const hpass = await bcrypt.hash(password, 10);
   const req = await conn.query(
     "INSERT INTO users (name, password, perm) VALUES ('" +
-      name +
-      "', '" +
-      hpass +
-      "', 0);"
+    name +
+    "', '" +
+    hpass +
+    "', 0);"
   );
 }
 
@@ -79,10 +79,10 @@ function token_gen(length) {
 async function addToken(conn, token, uid) {
   const req = await conn.query(
     "INSERT INTO tokens (user_id, token) VALUES ('" +
-      uid +
-      "', '" +
-      token +
-      "');"
+    uid +
+    "', '" +
+    token +
+    "');"
   );
 }
 
@@ -93,9 +93,36 @@ async function veryfyIdentity(conn, token) {
   if (req[0])
     return (result = await Promise.resolve(0));
   else
-  return (result = await Promise.resolve(1));
+    return (result = await Promise.resolve(1));
 }
 
+async function allUsers(conn, name) {
+  const req = await conn.query("SELECT * FROM users WHERE name != '" + name + "';")
+  let result = [];
+  for (var a = 0; req[a]; a++) {
+    result = [...result, req[a]];
+  }
+  return (await Promise.resolve(result));
+}
+
+async function Delete(conn, id) {
+  const res = await conn.query("DELETE FROM tokens WHERE user_id = '" + id + "';")
+  const req = await conn.query("DELETE FROM users WHERE id = '" + id + "';")
+}
+
+async function Promove(conn, id, perm) {
+  await conn.query("DELETE FROM tokens WHERE user_id = '" + id + "';")
+  await conn.query("UPDATE users SET perm = '" + perm + "' WHERE id = '" + id + "';")
+}
+
+async function check_token(conn, token) {
+  const req = await conn.query("SELECT * FROM tokens WHERE token = '" + token + "';")
+  if (!req[0]) {
+    return (await Promise.resolve("failure"))
+  } else {
+    return (await Promise.resolve("success"))
+  }
+}
 async function createConnection() {
   let conn;
   try {
@@ -148,11 +175,49 @@ async function createConnection() {
         }
       });
     });
-    app.post("/adminLoadUsers", (req, res) => {
-      console.log("revceived")
+    app.post("/loadusers", (req, res) => {
       res.set("Content-Type", "application/json");
-      res.status(500).json({status: "Failure", code: 500});
+      if (req.body.name) {
+        allUsers(conn, req.body.name).then((response) => {
+          res.status(200).json({ data: response, status: "deco", code: 200 });
+        })
+      }
     })
+    app.post("/delete", (req, res) => {
+      res.set("Content-Type", "application/json");
+      if (req.body.id) {
+        Delete(conn, req.body.id);
+        res.status(200).json({ status: "deco", code: 200 });
+      }
+    })
+    app.post("/promove", (req, res) => {
+      res.set("Content-Type", "application/json");
+      Promove(conn, req.body.id, req.body.perm);
+      res.status(200).json({ status: "deco", code: 200 });
+    })
+    app.post("/token", (req, res) => {
+      res.set("Content-Type", "application/json");
+      if (req.body.token) {
+        var base64Url = req.body.token.split('.')[1];
+        if (!base64Url) res.status(500).json({ status: "Failure", code: 500 });
+        else {
+          var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+          var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+          }).join(''));
+          var result = JSON.parse(jsonPayload)
+          if (!result.name) res.status(500).json({ status: "Failure", code: 500 });
+          else {
+            check_token(conn, result.token).then((response) => {
+              if (response == "failure") res.status(500).json({ status: "Failure", code: 500 });
+              else res.status(200).json({ status: "Success", code: 200 });
+            })
+          }
+        }
+      } else {
+        res.status(500).json({ status: "Failure", code: 500 });
+      }
+    });
   } catch (err) {
     throw err;
   }
