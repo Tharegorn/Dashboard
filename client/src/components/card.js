@@ -111,7 +111,7 @@ function Elem(props) {
       >
         {widgets.map((item) => (<MenuItem value={item.id}>{item.name}</MenuItem>))}
       </Select>
-      {type != 0 ? <button aria-describedby={id} onClick={handleClick}><HelpOutline/></button> : <div></div>}
+      {type !== 0 ? <button aria-describedby={id} onClick={handleClick}><HelpOutline/></button> : <div></div>}
       <Popover
         id={id}
         open={open}
