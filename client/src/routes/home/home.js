@@ -11,16 +11,13 @@ function Home() {
   function addcp() {
     setComp([...compos, <Elem key={compos.length} id={compos.length} />])
   }
-  useEffect(() => {
-    var token = localStorage.getItem("session_id");
-    check_token(token).then((res) => {
-      setRedir(true)
-    }).catch((err) => {
-      localStorage.removeItem("session_id");
-      setRedir(false)
-    })
-  }, [])
-  console.log(redir)
+  var token = localStorage.getItem("session_id");
+  check_token(token).then((res) => {
+    setRedir(true)
+  }).catch((err) => {
+    localStorage.removeItem("session_id");
+    setRedir(false)
+  })
   if (redir === true) {
     return (
       <div>

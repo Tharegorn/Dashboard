@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Card,
@@ -10,14 +10,13 @@ import {
   Typography,
   CardContent,
   Button,
-  Popover,
 } from "@material-ui/core/";
-import {HelpOutline} from '@material-ui/icons';
-import { getWeather, getChannel, getCurrency } from "../requests/apis_requests"
-import { widgets } from "./data.js"
+import { getWeather, getChannel, getCurrency, getWidgets, getFields } from "../requests/apis_requests"
+// import { widgets } from "./data.js"
 import Weather from "./weather/weather.js"
 import Youtube from "./youtube/youtube.js"
 import Currency from "./currency/currency"
+import { SettingsInputComponentRounded } from "@material-ui/icons";
 
 const useStyles = makeStyles({
   root: {
@@ -43,26 +42,22 @@ const useStyles = makeStyles({
 
 function Elem(props) {
   const classes = useStyles();
-  const [type, setType] = useState(0);
+  const [type, setType] = useState("None");
   const [compo, setCompo] = useState(null);
+  const [fields, setFields] = useState(<div></div>);
+  const [api, setApi] = useState()
+  const [tmp, setTmp] = useState({})
+  var search = <div></div>
   var data = {}
-  let activate;
-  let searchfield;
   let edit = <div></div>;
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+  useEffect(() => {
+    getWidgets().then((resp) => {
+      setApi(resp.data.apis)
+    })
+  }, [])
   function activ() {
     switch (type) {
-      case 1:
+      case "Weather":
         getWeather(data).then((res) => {
           setCompo(<Weather temp={res.data.temp} city={res.data.city} desc={res.data.desc} />)
         }).catch((err) => {
@@ -70,7 +65,7 @@ function Elem(props) {
           throw err;
         })
         break;
-      case 2:
+      case "Currency":
         getCurrency(data).then((res) => {
           setCompo(<Currency amount={res.data.amount} currency={res.data.currency} />)
         }).catch((err) => {
@@ -78,7 +73,7 @@ function Elem(props) {
           throw err;
         })
         break;
-      case 3:
+      case "YouTube":
         getChannel(data).then((res) => {
           setCompo(<Youtube name={res.data.name} thumbnail={res.data.thumbnail} id={res.data.id} views={res.data.views} subs={res.data.subs} vids={res.data.vids} />)
         }).catch((err) => {
@@ -92,46 +87,11 @@ function Elem(props) {
   }
   if (compo === null) {
     if (type !== 0) {
-      activate = (
-        <CardActions>
-          <Button size="small" onClick={activ} >Search</Button>
-        </CardActions>
-      );
+      search = <Button onClick={(e) => { e.preventDefault(); activ(); }}>
+        Search
+      </Button>
     } else {
-      activate = <div></div>;
-
     }
-    searchfield = <div><InputLabel>Type</InputLabel>
-      <Select
-        value={type}
-        onChange={(e) => {
-          setType(e.target.value);
-          data = {}
-        }}
-      >
-        {widgets.map((item) => (<MenuItem value={item.id}>{item.name}</MenuItem>))}
-      </Select>
-      {type !== 0 ? <button aria-describedby={id} onClick={handleClick}><HelpOutline/></button> : <div></div>}
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-      >
-        <Typography>{widgets.map((item) => (item.description))[type]}</Typography>
-      </Popover>
-      {widgets.map((item) => (item.fields))[type].map((second, index) => (<TextField key={index} label={second} name={second} onChange={(e) => { e.preventDefault(); data[second] = e.target.value; }} />))}</div>
-  } else {
-    edit = <Button size="small" onClick={(e) => { e.preventDefault(); setCompo(null) }}>Edit</Button>
-    searchfield = <div></div>
   }
   return (
     <Card className={classes.root}>
@@ -141,14 +101,31 @@ function Elem(props) {
           color="textSecondary"
           gutterBottom
         >
-          Select widget {props.id}
+          Select widget
         </Typography>
-        {searchfield}
+        {compo ? compo : <div><InputLabel>Type</InputLabel>
+          <Select
+            value={type}
+            onChange={(e) => {
+              setType(e.target.value);
+              setTmp("d")
+              if (e.target.value !== "None") {
+                getFields(e.target.value).then((res) => {
+                  setTmp(res)
+                })
+              }
+              else setFields(<div></div>)
+              data = {}
+            }}
+          >
+            {api ? api.map((item) => (<MenuItem value={item.name}>{item.name}</MenuItem>)) : <MenuItem value='None'>None</MenuItem>}
+          </Select>
+          {tmp.data ? tmp.data.fields.map((item) => (<div>{item.values ?
+            <Select onChange={(ev) => { ev.preventDefault(); data[item.name] = ev.target.value }}>{item.values.map((val) => (<MenuItem key={val.id} id={val.name} value={val.name}>{val.name}</MenuItem>))}</Select> :
+            <TextField onChange={(ev) => { ev.preventDefault(); data[item.name] = ev.target.value }} id={item.id} label={item.name} />}</div>)) : <div></div>}</div>}
       </CardContent>
-      {activate}
-      {compo}
       <CardActions>
-        {edit}
+        {edit}{search}
         <Button size="small" onClick={(e) => { e.preventDefault(); document.getElementById("" + props.id + "").remove(); }}>Delete</Button>
       </CardActions>
     </Card>

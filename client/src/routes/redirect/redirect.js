@@ -4,7 +4,6 @@ function redirecter(route) {
   const sid = localStorage.getItem("session_id");
     console.log("bite")
   if (sid) {
-      console.log("salut")
     verify(sid)
       .then((res) => {
         console.log(res)

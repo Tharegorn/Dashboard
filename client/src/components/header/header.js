@@ -5,7 +5,7 @@ import { check_token } from "../../requests/user_requests";
 import "./header.css";
 
 function Header() {
-  const [redir, setRedir] = useState()
+  const [redir, setRedir] = useState(false)
 
   function LogOut() {
     localStorage.removeItem("session_id");
