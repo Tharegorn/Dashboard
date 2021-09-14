@@ -1,27 +1,13 @@
 version: "3"
 
 services:
-  currency_app:
+  widgets_api:
     build:
-      context: ./apis/currency
-    depends_on:
-      - db
-    ports:
-      - 4245:4245
-  youtube_app:
-    build:
-      context: ./apis/youtube
+      context: ./apis/
     depends_on:
       - db
     ports:
       - 4244:4244
-  weather_app:
-    build:
-      context: ./apis/weather
-    depends_on:
-      - db
-    ports:
-      - 4243:4243
   user_api:
     build:        
       context: ./server_user
