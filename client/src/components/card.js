@@ -16,7 +16,6 @@ import { getWeather, getChannel, getCurrency, getWidgets, getFields } from "../r
 import Weather from "./weather/weather.js"
 import Youtube from "./youtube/youtube.js"
 import Currency from "./currency/currency"
-import { SettingsInputComponentRounded } from "@material-ui/icons";
 
 const useStyles = makeStyles({
   root: {
@@ -44,7 +43,6 @@ function Elem(props) {
   const classes = useStyles();
   const [type, setType] = useState("None");
   const [compo, setCompo] = useState(null);
-  const [fields, setFields] = useState(<div></div>);
   const [api, setApi] = useState()
   const [tmp, setTmp] = useState({})
   var search = <div></div>
@@ -114,14 +112,13 @@ function Elem(props) {
                   setTmp(res)
                 })
               }
-              else setFields(<div></div>)
               data = {}
             }}
           >
             {api ? api.map((item) => (<MenuItem value={item.name}>{item.name}</MenuItem>)) : <MenuItem value='None'>None</MenuItem>}
           </Select>
           {tmp.data ? tmp.data.fields.map((item) => (<div>{item.values ?
-            <Select onChange={(ev) => { ev.preventDefault(); data[item.name] = ev.target.value }}>{item.values.map((val) => (<MenuItem key={val.id} id={val.name} value={val.name}>{val.name}</MenuItem>))}</Select> :
+            <Select value='0' onChange={(ev) => { ev.preventDefault(); data[item.name] = ev.target.value }}>{item.values.map((val) => (<MenuItem key={val.id} id={val.name} value={val.name}>{val.name}</MenuItem>))}</Select> :
             <TextField onChange={(ev) => { ev.preventDefault(); data[item.name] = ev.target.value }} id={item.id} label={item.name} />}</div>)) : <div></div>}</div>}
       </CardContent>
       <CardActions>

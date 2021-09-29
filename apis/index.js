@@ -13,3 +13,4 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use("/", weather,youtube, widgets, currency);
 app.listen(4244, () => { console.log("Listening on port 4244."); });
+app.use("/", weather,youtube, widgets, currency);

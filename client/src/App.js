@@ -6,6 +6,8 @@ import Home from "./routes/home/home";
 import Login from "./routes/login/login";
 import Register from "./routes/register/register";
 import Admin from "./routes/admin/admin"
+import Account from "./routes/account/account";
+import Dashboard from "./routes/dashboard/dashboard";
 import "./App.css";
 
 function App() {
@@ -17,6 +19,8 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/admin" component={Admin} />
+        <Route path="/account" component={Account} />
+        <Route path="/dashboard" component={Dashboard} />
       </div>
       <Footer />
     </Router>
