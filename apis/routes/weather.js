@@ -20,7 +20,6 @@ function options(c) {
 
 rooter.post('/weather', (req, res) => {
     res.set("Content-Type", "application/json");
-    console.log(req.body.data.City)
     if (req.body.data.City) {
         axios.request(options(req.body.data.City)).then(function (rev) {
             res.status(200).json({ status: "Succes", code: 200, city: rev.data.name, temp: rev.data.main.temp, desc: rev.data.weather[0].description })

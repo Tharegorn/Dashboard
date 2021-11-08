@@ -18,7 +18,7 @@ services:
     depends_on:
       - db
     ports:
-      - 4242:4242
+      - 8080:4242
   db:
     image: mariadb
     ports:
@@ -39,7 +39,7 @@ services:
     depends_on:
       - db
     ports:
-      - 8000:80
+      - 9000:80
     environment:
       MYSQL_USER: user
       MYSQL_PASSWORD: test

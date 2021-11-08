@@ -17,7 +17,6 @@ function getWeather(data) {
 }
 
 function getChannel(data) {
-    console.log(data)
     return new Promise(function (resolve, reject) {
         axios.post('http://localhost:4244/youtube', { data }).then(res => {
             resolve(res);

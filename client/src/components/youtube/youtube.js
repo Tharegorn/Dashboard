@@ -10,6 +10,7 @@ function Youtube(props) {
             <p><Visibility /> : {props.views}</p>
             <p><PersonAdd /> : {props.subs}</p>
             <p><OndemandVideo /> : {props.vids}</p>
+            {props.video != null? <a href={"https://youtube.com/watch?v=" + props.video} rel="noreferrer" target="_blank">Last Video</a> : <p>Any last video</p>}
         </div>)
     }
     else {

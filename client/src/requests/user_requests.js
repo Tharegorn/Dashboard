@@ -2,7 +2,7 @@ import axios from 'axios';
 
 function createUser(name, pass) {
     return new Promise(function (resolve, reject) {
-        axios.post('http://localhost:4242/register', { name: name, pass: pass }).then(res => {
+        axios.post('http://localhost:8080/register', { name: name, pass: pass }).then(res => {
             resolve(res)
         }).catch((err) => setImmediate(() => { reject(err) }))
     })
@@ -10,7 +10,7 @@ function createUser(name, pass) {
 
 function loginUser(name, pass) {
     return new Promise(function (resolve, reject) {
-        axios.post('http://localhost:4242/login', { name: name, pass: pass }).then(res => {
+        axios.post('http://localhost:8080/login', { name: name, pass: pass }).then(res => {
             resolve(res)
         }).catch((err) => setImmediate(() => { reject(err) }))
     })
@@ -18,7 +18,7 @@ function loginUser(name, pass) {
 
 function verify(token) {
     return new Promise(function (resolve, reject) {
-        axios.post('http://localhost:4242/verify', { token: token }).then(res => {
+        axios.post('http://localhost:8080/verify', { token: token }).then(res => {
             resolve(res)
         }).catch((err) => setImmediate(() => { reject(err) }))
     })
@@ -26,7 +26,7 @@ function verify(token) {
 
 function checkAdmin(name) {
     return new Promise(function (resolve, reject) {
-        axios.post('http://localhost:4242/loadusers', { name: name }).then(res => {
+        axios.post('http://localhost:8080/loadusers', { name: name }).then(res => {
             resolve(res)
         }).catch((err) => setImmediate(() => { reject(err) }))
     })
@@ -34,7 +34,7 @@ function checkAdmin(name) {
 
 function deleteUser(id) {
     return new Promise(function (resolve, reject) {
-        axios.post('http://localhost:4242/delete', { id: id }).then(res => {
+        axios.post('http://localhost:8080/delete', { id: id }).then(res => {
             resolve(res)
         }).catch((err) => setImmediate(() => { reject(err) }))
     })
@@ -42,7 +42,7 @@ function deleteUser(id) {
 
 function promove(id, perm) {
     return new Promise(function (resolve, reject) {
-        axios.post('http://localhost:4242/promove', { id: id, perm: perm }).then(res => {
+        axios.post('http://localhost:8080/promove', { id: id, perm: perm }).then(res => {
             resolve(res)
         }).catch((err) => setImmediate(() => { reject(err) }))
     })
@@ -66,7 +66,7 @@ function check_jwt(token) {
 
 function check_token(token) {
     return new Promise(function (resolve, reject) {
-        axios.post('http://localhost:4242/token', { token: token}).then(res => {
+        axios.post('http://localhost:8080/token', { token: token}).then(res => {
             resolve(res)
         }).catch((err) => setImmediate(() => { reject(err) }))
     })
