@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Redirect } from "react-router-dom";
-import { Button } from "@material-ui/core";
+import { Page, Header, Search } from "../../components/admin/";
 import jwt_decode from "jwt-decode";
 import {
   checkAdmin,
@@ -8,86 +8,41 @@ import {
   deleteUser,
   promove,
 } from "../../requests/user_requests";
+import { Button } from "@material-ui/core";
+import AddUser from "../../components/AddUser";
+import "./index.css";
 
 function Admin() {
   const [res, setRed] = useState();
-  const [div, setDiv] = useState();
+  const [content, setContent] = useState([]);
+  const [totalItems, setTotalItems] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const [sorting, setSorting] = useState({ field: "", order: "" });
+  const [user, setUser] = useState(false);
 
-  const ITEMS_PER_PAGE = 50;
+  const ITEMS_PER_PAGE = 10;
   const headers = [
     { name: "Id", field: "id", sortable: false },
     { name: "Name", field: "name", sortable: true },
     { name: "Date", field: "date", sortable: false },
-];
+    { name: "Promote/Demote", field: "prom", sortable: false },
+    { name: "Remove", field: "remove", sortable: false },
+  ];
 
   function update() {
     var token = localStorage.getItem("session_id");
     var user = jwt_decode(token);
     checkAdmin(user.name)
       .then((resp) => {
-        setDiv(
-          resp.data.data.map((item) => (
-            <tr>
-              <td key={item.id}>{item.id}</td>
-              <td>{item.name}</td>
-              <td>{item.added_at}</td>
-              <td>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    deleteUser(item.id).then(() => {
-                      update();
-                    });
-                  }}
-                >
-                  Delete
-                </Button>
-              </td>
-              {item.perm !== 1 ? (
-                <td>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      promove(item.id, 1).then(() => {
-                        update();
-                      });
-                    }}
-                  >
-                    Promove
-                  </Button>
-                </td>
-              ) : (
-                <td>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      promove(item.id, 0).then(() => {
-                        update();
-                      });
-                    }}
-                  >
-                    Degage
-                  </Button>
-                </td>
-              )}
-            </tr>
-          ))
-        );
+        setContent(resp.data.data);
+        setTotalItems(resp.data.data.length);
       })
       .catch((err) => {
         throw err;
       });
   }
   useEffect(() => {
-
-
-
     if (!localStorage.getItem("session_id")) {
       setRed(false);
     } else {
@@ -105,60 +60,8 @@ function Admin() {
         case "adm":
           checkAdmin(user.name)
             .then((resp) => {
-              setDiv(
-                resp.data.data.map((item) => (
-                  <tr>
-                    <td key={item.id}>{item.id}</td>
-                    <td>{item.name}</td>
-                    <td>{item.added_at}</td>
-                    <td>
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          deleteUser(item.id).then(() => {
-                            update();
-                          });
-                        }}
-                      >
-                        Delete
-                      </Button>
-                    </td>
-                    {item.perm !== 1 ? (
-                      <td>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            promove(item.id, 1).then(() => {
-                              update();
-                            });
-                          }}
-                        >
-                          Promove
-                        </Button>
-                      </td>
-                    ) : (
-                      <td>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            promove(item.id, 0).then(() => {
-                              update();
-                            });
-                          }}
-                        >
-                          Degage
-                        </Button>
-                      </td>
-                    )}
-                  </tr>
-                ))
-              );
+              setContent(resp.data.data);
+              setTotalItems(resp.data.data.length);
             })
             .catch((err) => {
               throw err;
@@ -173,75 +76,114 @@ function Admin() {
       }
     }
   }, []);
+  const commentsData = useMemo(() => {
+    let computedComments = content;
+    if (search) {
+      computedComments = computedComments.filter(
+        (comment) =>
+          comment.name.toLowerCase().includes(search.toLowerCase()) ||
+          comment.email.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+    setTotalItems(computedComments.length);
+    if (sorting.field) {
+      const reversed = sorting.order === "asc" ? 1 : -1;
+      computedComments = computedComments.sort(
+        (a, b) => reversed * a[sorting.field].localeCompare(b[sorting.field])
+      );
+    }
+    return computedComments.slice(
+      (currentPage - 1) * ITEMS_PER_PAGE,
+      (currentPage - 1) * ITEMS_PER_PAGE + ITEMS_PER_PAGE
+    );
+  }, [content, currentPage, search, sorting]);
   if (res === false) return <Redirect to="/" />;
   return (
     <>
-      <>
-        {/* <Header title="Building a data table in react" /> */}
+      {user === true ? <AddUser/> : <></>}
 
-        {/* <ExternalInfo page="datatable" /> */}
-
-        <div className="row w-100">
-          <div className="col mb-3 col-12 text-center">
-            <div className="row">
-              <div className="col-md-6">
-                {/* <Pagination
-                  total={totalItems}
-                  itemsPerPage={ITEMS_PER_PAGE}
-                  currentPage={currentPage}
-                  onPageChange={(page) => setCurrentPage(page)}
-                /> */}
-              </div>
-              <div className="col-md-6 d-flex flex-row-reverse">
-                {/* <Search
-                  onSearch={(value) => {
-                    setSearch(value);
-                    setCurrentPage(1);
-                  }}
-                /> */}
-              </div>
+      <div>
+        <div>
+          <div>
+            <div>
+              <Button
+                color="primary"
+                variant="outlined"
+                onClick={() => setUser(true)}
+              >
+                Add User
+              </Button>
+              <Page
+                total={totalItems}
+                itemsPerPage={ITEMS_PER_PAGE}
+                currentPage={currentPage}
+                onPageChange={(page) => setCurrentPage(page)}
+              />
             </div>
-
-            <table className="table table-striped">
-              {/* <TableHeader
-                headers={headers}
-                onSorting={(field, order) => setSorting({ field, order })}
-              /> */}
-              <tbody>
-                {/* {commentsData.map((comment) => (
-                  <tr>
-                    <th scope="row" key={comment.id}>
-                      {comment.id}
-                    </th>
-                    <td>{comment.name}</td>
-                    <td>{comment.email}</td>
-                    <td>{comment.body}</td>
-                  </tr>
-                ))} */}
-              </tbody>
-            </table>
+            <div>
+              <Search
+                onSearch={(value) => {
+                  setSearch(value);
+                  setCurrentPage(1);
+                }}
+              />
+            </div>
           </div>
+
+          <table>
+            <Header
+              headers={headers}
+              onSorting={(field, order) => setSorting({ field, order })}
+            />
+            <tbody>
+              {commentsData.map((comment) => (
+                <tr>
+                  <th scope="row" key={comment.id}>
+                    {comment.id}
+                  </th>
+                  <td>{comment.name}</td>
+                  <td>{comment.added_at}</td>
+                  <td>
+                    {comment.perm === 1 ? (
+                      <div
+                        onClick={() => {
+                          promove(comment.id, 0).then(() => {
+                            update();
+                          });
+                        }}
+                      >
+                        demote
+                      </div>
+                    ) : (
+                      <div
+                        onClick={() => {
+                          promove(comment.id, 1).then(() => {
+                            update();
+                          });
+                        }}
+                      >
+                        promote
+                      </div>
+                    )}
+                  </td>
+                  <td>
+                    <div
+                      onClick={() => {
+                        deleteUser(comment.id).then(() => {
+                          update();
+                        });
+                      }}
+                    >
+                      Delete
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-        {/* {loader} */}
-      </>
+      </div>
     </>
-
-    // <div>
-    //     <table>
-    //         <thead>
-    //             <th>
-    //                 Id
-    //             </th><th>Name</th><th>Date</th>
-    //         </thead>
-
-    //         <tbody>
-    //             {div}
-    //         </tbody>
-    //         <tfoot>
-
-    //         </tfoot>
-    //     </table>
-    // </div>
   );
 }
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router";
 import { check_token } from "../../requests/user_requests";
-import { GitHub, Spotify } from "@material-ui/icons";
+import { GitHub } from "@material-ui/icons";
 import { Button } from "@material-ui/core";
 function Account() {
     const [redir, setRedir] = useState();
@@ -14,7 +14,7 @@ function Account() {
             setRedir(false);
         })
     }, [])
-    if (redir == false)
+    if (redir === false)
         return <Redirect to="/" />;
     else {
         return (<div>
