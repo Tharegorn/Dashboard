@@ -48,6 +48,21 @@ function promove(id, perm) {
     })
 }
 
+function updt_name(id, name) {
+    return new Promise(function (resolve, reject) {
+        axios.post('http://localhost:8080/update/name', { id: id, name: name }).then(res => {
+            resolve(res)
+        }).catch((err) => setImmediate(() => { reject(err) }))
+    })
+}
+function updt_psswd(id, password) {
+    return new Promise(function (resolve, reject) {
+        axios.post('http://localhost:8080/update/password', { id: id, password: password }).then(res => {
+            resolve(res)
+        }).catch((err) => setImmediate(() => { reject(err) }))
+    })
+}
+
 function check_jwt(token) {
     var base64Url = token.split('.')[1];
     if (!base64Url) return ("INVALID");
@@ -66,7 +81,7 @@ function check_jwt(token) {
 
 function check_token(token) {
     return new Promise(function (resolve, reject) {
-        axios.post('http://localhost:8080/token', { token: token}).then(res => {
+        axios.post('http://localhost:8080/token', { token: token }).then(res => {
             resolve(res)
         }).catch((err) => setImmediate(() => { reject(err) }))
     })
@@ -80,4 +95,6 @@ export {
     deleteUser,
     promove,
     check_token,
+    updt_name,
+    updt_psswd
 }
