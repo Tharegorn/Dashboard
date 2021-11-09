@@ -19,6 +19,7 @@ services:
       - db
     ports:
       - 8080:4242
+    restart: on-failure
   db:
     image: mariadb
     ports:
