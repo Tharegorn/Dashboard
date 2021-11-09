@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router";
 import { check_token } from "../../requests/user_requests";
 import { GitHub } from "@material-ui/icons";
-import { Button } from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
 function Account() {
     const [redir, setRedir] = useState();
+    const [name, setName] = useState("")
+    const [password, setPassword] = useState("")
     useEffect(() => {
         var token = localStorage.getItem("session_id");
         check_token(token).then((res) => {
@@ -18,10 +20,9 @@ function Account() {
         return <Redirect to="/" />;
     else {
         return (<div>
-            <h1>Linked Accounts</h1>
+            <h3>Linked Accounts</h3>
             <hr></hr>
-            <h1>Availables Services</h1>
-            <hr></hr>
+            <h3>Availables Services</h3>
             <div>
                 <h3>GitHub</h3>
                 <GitHub />
@@ -37,6 +38,34 @@ function Account() {
                 <GitHub />
                 <Button variant="contained" color="primary">Link</Button>
             </div>
+            <hr></hr>
+            <h3>Modify Informations</h3>
+            <form>
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="Username"
+                    type="name"
+                    variant="standard"
+                    onChange={(e) =>
+                        setName(e.target.value)
+                    }
+                />
+                <Button color="success" variant="contained">Save</Button>
+            </form>
+            <form>
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    id="password"
+                    label="Password"
+                    type="password"
+                    variant="standard"
+                    onChange={(e) => { setPassword(e.target.value) }}
+                />
+                <Button color="success" variant="contained">Save</Button>
+            </form>
         </div>
         )
     }
