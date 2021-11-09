@@ -1,6 +1,7 @@
 FROM node:latest
 WORKDIR /usr/src/app
 COPY * ./
-RUN yarn install
+COPY ./queries/ ./queries/
+RUN yarn install; ls
 EXPOSE 4242
 CMD ["node", "index.js"]
