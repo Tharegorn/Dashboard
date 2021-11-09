@@ -1,3 +1,5 @@
+const bcrypt = require("bcrypt");
+
 module.exports = {
     addToken: async function addToken(conn, token, uid) {
         const req = await conn.query(

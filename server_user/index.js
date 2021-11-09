@@ -115,10 +115,20 @@ async function createConnection() {
       res.status(200).json({ status: "deco", code: 200 });
     });
     app.post("/update/password", (req, res) => {
-
+      res.set("Content-Type", "application/json");
+      if (req.body.id && req.body.password) {
+        update.update(conn, null, req.body.password, req.body.id);
+        res.status(200).json({ status: "Success", code: 200 });
+      } else
+        res.status(500).json({ status: "Missing Credentials", code: 500 })
     })
     app.post("/update/name", (req, res) => {
-
+      res.set("Content-Type", "application/json");
+      if (req.body.id && req.body.name) {
+        update.update(conn, req.body.name, null, req.body.id);
+        res.status(200).json({ status: "Success", code: 200 });
+      } else
+        res.status(500).json({ status: "Missing Credentials", code: 500 })
     })
     app.post("/token", (req, res) => {
       res.set("Content-Type", "application/json");
