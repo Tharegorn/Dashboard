@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import Elem from "../../components/card";
 import { check_token } from "../../requests/user_requests";
+import Layout from "../_layouts/Home"
 import "./home.css"
 function Home() {
   const [compos, setComp] = useState([])
@@ -24,6 +25,7 @@ function Home() {
         <div className="compo">
           {Widgets}
         </div>
+        <Layout />
       </div>
     );
   } else {

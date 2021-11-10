@@ -11,6 +11,7 @@ import {
 import { Button } from "@material-ui/core";
 import AddUser from "../../components/AddUser";
 import "./index.css";
+import { Delete, PersonAdd, PersonAddDisabled } from "@material-ui/icons"
 
 function Admin() {
   const [res, setRed] = useState();
@@ -81,8 +82,7 @@ function Admin() {
     if (search) {
       computedComments = computedComments.filter(
         (comment) =>
-          comment.name.toLowerCase().includes(search.toLowerCase()) ||
-          comment.email.toLowerCase().includes(search.toLowerCase())
+          comment.name.toLowerCase().includes(search.toLowerCase())
       );
     }
     setTotalItems(computedComments.length);
@@ -100,7 +100,7 @@ function Admin() {
   if (res === false) return <Redirect to="/" />;
   return (
     <>
-      {user === true ? <AddUser/> : <></>}
+      {user === true ? <AddUser /> : <></>}
 
       <div>
         <div>
@@ -130,7 +130,7 @@ function Admin() {
             </div>
           </div>
 
-          <table>
+          <table class="container">
             <Header
               headers={headers}
               onSorting={(field, order) => setSorting({ field, order })}
@@ -152,7 +152,7 @@ function Admin() {
                           });
                         }}
                       >
-                        demote
+                        <PersonAddDisabled />
                       </div>
                     ) : (
                       <div
@@ -162,7 +162,7 @@ function Admin() {
                           });
                         }}
                       >
-                        promote
+                        <PersonAdd />
                       </div>
                     )}
                   </td>
@@ -174,7 +174,7 @@ function Admin() {
                         });
                       }}
                     >
-                      Delete
+                      <Delete />
                     </div>
                   </td>
                 </tr>
