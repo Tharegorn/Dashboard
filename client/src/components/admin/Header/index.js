@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import "./index.css"
 const Header = ({ headers, onSorting }) => {
     const [sortingField, setSortingField] = useState("");
     const [sortingOrder, setSortingOrder] = useState("asc");
@@ -15,7 +15,7 @@ const Header = ({ headers, onSorting }) => {
     };
 
     return (
-        <thead>
+        <thead class="container">
             <tr>
                 {headers.map(({ name, field, sortable }) => (
                     <th

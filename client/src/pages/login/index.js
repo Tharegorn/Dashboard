@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Redirect, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   FormHelperText,
   TextField,
@@ -37,7 +37,9 @@ function Login() {
         setHelp("Problème");
       });
   }
-  if (regis === true) return <Redirect to="/" />;
+  if (regis === true) {
+    window.location.assign("/")
+  }
   return (
     <div className="login" >
       <FormControl className="login-form" error={error} variant="filled">
