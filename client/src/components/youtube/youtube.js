@@ -1,8 +1,12 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { startVideoPlayer } from "../../actions/layout";
 
 import { Visibility, OndemandVideo, PersonAdd, ErrorOutline } from '@material-ui/icons'
 
 function Youtube(props) {
+    const dispatch = useDispatch();
+
     if (props.name !== "ERROR") {
         return (<div>
             <img src={props.thumbnail} alt={props.name} />
@@ -10,7 +14,7 @@ function Youtube(props) {
             <p><Visibility /> : {props.views}</p>
             <p><PersonAdd /> : {props.subs}</p>
             <p><OndemandVideo /> : {props.vids}</p>
-            {props.video != null? <a href={"https://youtube.com/watch?v=" + props.video} rel="noreferrer" target="_blank">Last Video</a> : <p>Any last video</p>}
+            {props.video != null? <div onClick={() => dispatch(startVideoPlayer(props.video))}>Watch Video</div> : <p>Any last video</p>}
         </div>)
     }
     else {

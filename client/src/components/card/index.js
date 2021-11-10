@@ -18,10 +18,13 @@ import {
   getWidgets,
   getFields,
 } from "../../requests/apis_requests";
+import Draggable from "react-draggable";
+import "react-resizable/css/styles.css";
 // import { widgets } from "./data.js"
 import Weather from "../weather/weather.js";
 import Youtube from "../youtube/youtube.js";
 import Currency from "../currency/currency";
+import { DragIndicator } from '@material-ui/icons';
 
 const useStyles = makeStyles({
   root: {
@@ -46,6 +49,7 @@ const useStyles = makeStyles({
 });
 
 function Elem(props) {
+
   const classes = useStyles();
   const [type, setType] = useState("None");
   const [compo, setCompo] = useState(null);
@@ -63,12 +67,14 @@ function Elem(props) {
       Edit
     </Button>
   );
+
   useEffect(() => {
     getWidgets().then((resp) => {
       setApi(resp.data.apis);
     });
   }, []);
   function activ() {
+
     switch (type) {
       case "Weather":
         getWeather(data)
@@ -151,89 +157,94 @@ function Elem(props) {
     }
   }
   return (
-    <Card className={classes.root}>
-      <CardContent>
-        <Typography
-          className={classes.title}
-          color="textSecondary"
-          gutterBottom
-        >
-          Select widget
-        </Typography>
-        {compo ? (
-          compo
-        ) : (
-          <div>
-            <InputLabel>Type</InputLabel>
-            <Select
-              value={type}
-              onChange={(e) => {
-                setType(e.target.value);
-                setTmp("d");
-                if (e.target.value !== "None") {
-                  getFields(e.target.value).then((res) => {
-                    setTmp(res);
-                  });
-                }
-                data = {};
-              }}
-            >
-              {api ? (
-                api.map((item) => (
-                  <MenuItem value={item.name}>{item.name}</MenuItem>
+    <Draggable handle=".handle">
+      <Card className={classes.root}>
+        <div className="handle">
+          <DragIndicator/>
+        </div>
+        <CardContent>
+          <Typography
+            className={classes.title}
+            color="textSecondary"
+            gutterBottom
+          >
+            Select widget
+          </Typography>
+          {compo ? (
+            compo
+          ) : (
+            <div>
+              <InputLabel>Type</InputLabel>
+              <Select
+                value={type}
+                onChange={(e) => {
+                  setType(e.target.value);
+                  setTmp("d");
+                  if (e.target.value !== "None") {
+                    getFields(e.target.value).then((res) => {
+                      setTmp(res);
+                    });
+                  }
+                  data = {};
+                }}
+              >
+                {api ? (
+                  api.map((item) => (
+                    <MenuItem value={item.name}>{item.name}</MenuItem>
+                  ))
+                ) : (
+                  <MenuItem value="None">None</MenuItem>
+                )}
+              </Select>
+              {tmp.data ? (
+                tmp.data.fields.map((item) => (
+                  <div>
+                    {item.values ? (
+                      <Select
+                        value="0"
+                        onChange={(ev) => {
+                          ev.preventDefault();
+                          data[item.name] = ev.target.value;
+                        }}
+                      >
+                        {item.values.map((val) => (
+                          <MenuItem key={val.id} id={val.name} value={val.name}>
+                            {val.name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    ) : (
+                      <TextField
+                        onChange={(ev) => {
+                          ev.preventDefault();
+                          data[item.name] = ev.target.value;
+                        }}
+                        id={item.id}
+                        label={item.name}
+                      />
+                    )}
+                  </div>
                 ))
               ) : (
-                <MenuItem value="None">None</MenuItem>
+                <div></div>
               )}
-            </Select>
-            {tmp.data ? (
-              tmp.data.fields.map((item) => (
-                <div>
-                  {item.values ? (
-                    <Select
-                      value="0"
-                      onChange={(ev) => {
-                        ev.preventDefault();
-                        data[item.name] = ev.target.value;
-                      }}
-                    >
-                      {item.values.map((val) => (
-                        <MenuItem key={val.id} id={val.name} value={val.name}>
-                          {val.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  ) : (
-                    <TextField
-                      onChange={(ev) => {
-                        ev.preventDefault();
-                        data[item.name] = ev.target.value;
-                      }}
-                      id={item.id}
-                      label={item.name}
-                    />
-                  )}
-                </div>
-              ))
-            ) : (
-              <div></div>
-            )}
-          </div>
-        )}
-      </CardContent>
-      <CardActions>
-        {compo ? edit : search}
-        <Button
-          size="small"
-          onClick={(e) => {
-            e.preventDefault();
-            document.getElementById("" + props.id + "").remove();
-          }}
-        >
-          Delete
-        </Button>
-      </CardActions>
-    </Card>
+            </div>
+          )}
+        </CardContent>
+        <CardActions>
+          {compo ? edit : search}
+          <Button
+            size="small"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("" + props.id + "").remove();
+            }}
+          >
+            Delete
+          </Button>
+        </CardActions>
+      </Card>
+    </Draggable >
   );
 }
 
