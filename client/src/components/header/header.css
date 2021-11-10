@@ -1,5 +1,14 @@
 header{
 	padding:1px 0px;
-	background: rgb(185, 222, 224);
+	/* background: rgb(185, 222, 224); */
 	text-align:center;
+}
+
+.div_ul_hor {
+    /* background-color:#eeeeee; */
+    display:inline;    
+}
+.ul_hor li{
+	float: right;
+	display: inline;
 }

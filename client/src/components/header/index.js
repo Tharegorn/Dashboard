@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Button from "@material-ui/core/Button";
 import jwt_decode from "jwt-decode"
 import { check_token } from "../../requests/user_requests";
 import "./header.css";
 
-function Header() {
+function Header(props) {
   const [redir, setRedir] = useState(false)
 
   function LogOut() {
@@ -20,20 +19,40 @@ function Header() {
       setRedir(false)
     })
   }, [])
-    if (redir === true) {
-      return (
-        <header>
-          <p>Welcome {jwt_decode(localStorage.getItem("session_id")).name}</p>
-          <Button variant="contained" color="primary" onClick={LogOut}>
-            Log Out
-          </Button>
-        </header>
-      );
-    } else {
+  if (redir === true) {
     return (
-      <header>
-        <p> Header !</p>
-      </header>
+      <>
+        <header>
+          <div >
+            <div >
+              <h1 >Dashboard</h1>
+              <div>Welcome {jwt_decode(localStorage.getItem("session_id")).name}</div>
+              <div class="div_ul_hor">
+                <ul class="ul_hor">
+                  <li onClick={() => { LogOut() }}>Logout</li>
+                  <li onClick={() => { window.location.assign("/admin") }}>Admin</li>
+                  <li onClick={() => { window.location.assign("/account") }}>Account</li>
+                  <li onClick={() => { window.location.assign("/") }}>Home</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </header>
+      </>
+    );
+  } else {
+    return (
+      <>
+        {/* <div class="container">
+          <div class="header-bar">
+            <h1 class="logo">C</h1>
+            <ul class="slider-menu">
+              <li>Home</li>
+            </ul>
+          </div>
+        </div>
+      </> */}
+      </>
     );
   }
 }
