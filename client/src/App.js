@@ -4,25 +4,21 @@ import Footer from "./components/footer";
 import Header from "./components/header";
 import Home from "./pages/home";
 import routes from "./routes";
-import ReactLoading from "react-loading"
+import Spin from "./components/loading";
 import "./App.css";
 
 function App() {
   return (
     <Router>
       <Header />
-
-      <Suspense fallback={<ReactLoading type={"spin"}
-        color={"#163C40"}
-        height={500}
-        width={500} />}>
+      <Suspense fallback={<Spin />}>
         <Switch>
           {routes.map((route) => (
-            <Route
-              path={route.path}
-              component={route.component}
-              key={route.path}
-            />
+              <Route
+                path={route.path}
+                component={route.component}
+                key={route.path}
+              />
           ))}
         </Switch>
         <Route path="/" exact>
