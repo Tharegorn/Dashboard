@@ -11,7 +11,7 @@ function App() {
   return (
     <Router>
       <Header />
-      
+
       <Suspense fallback={<ReactLoading type={"spin"}
         color={"#163C40"}
         height={500}
