@@ -24,7 +24,7 @@ import "react-resizable/css/styles.css";
 import Weather from "../weather/weather.js";
 import Youtube from "../youtube/youtube.js";
 import Currency from "../currency/currency";
-import { DragIndicator } from '@material-ui/icons';
+import { DragIndicator } from "@material-ui/icons";
 
 const useStyles = makeStyles({
   root: {
@@ -49,7 +49,6 @@ const useStyles = makeStyles({
 });
 
 function Elem(props) {
-
   const classes = useStyles();
   const [type, setType] = useState("None");
   const [compo, setCompo] = useState(null);
@@ -74,7 +73,6 @@ function Elem(props) {
     });
   }, []);
   function activ() {
-
     switch (type) {
       case "Weather":
         getWeather(data)
@@ -159,8 +157,8 @@ function Elem(props) {
   return (
     <Draggable handle=".handle">
       <Card className={classes.root}>
-        <div className="handle">
-          <DragIndicator/>
+        <div className="handle" title="Drag Me">
+          <DragIndicator />
         </div>
         <CardContent>
           <Typography
@@ -244,7 +242,7 @@ function Elem(props) {
           </Button>
         </CardActions>
       </Card>
-    </Draggable >
+    </Draggable>
   );
 }
 

@@ -11,7 +11,7 @@ import {
 import { Button } from "@material-ui/core";
 import AddUser from "../../components/AddUser";
 import "./index.css";
-import { Delete, PersonAdd, PersonAddDisabled } from "@material-ui/icons"
+import { Delete, PersonAdd, PersonAddDisabled } from "@material-ui/icons";
 
 function Admin() {
   const [res, setRed] = useState();
@@ -20,7 +20,8 @@ function Admin() {
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
   const [sorting, setSorting] = useState({ field: "", order: "" });
-  const [user, setUser] = useState(false);
+
+  const [visibility, setVisibility] = useState(false);
 
   const ITEMS_PER_PAGE = 10;
   const headers = [
@@ -80,9 +81,8 @@ function Admin() {
   const commentsData = useMemo(() => {
     let computedComments = content;
     if (search) {
-      computedComments = computedComments.filter(
-        (comment) =>
-          comment.name.toLowerCase().includes(search.toLowerCase())
+      computedComments = computedComments.filter((comment) =>
+        comment.name.toLowerCase().includes(search.toLowerCase())
       );
     }
     setTotalItems(computedComments.length);
@@ -100,7 +100,7 @@ function Admin() {
   if (res === false) return <Redirect to="/" />;
   return (
     <>
-      {user === true ? <AddUser /> : <></>}
+      {visibility ? <AddUser onClose={true}/> : <></>}
 
       <div>
         <div>
@@ -109,7 +109,7 @@ function Admin() {
               <Button
                 color="primary"
                 variant="outlined"
-                onClick={() => setUser(true)}
+                onClick={() => {setVisibility(!visibility)}}
               >
                 Add User
               </Button>
