@@ -9,13 +9,14 @@ import {
   DialogTitle,
 } from "@material-ui/core";
 import { createUser } from "../../requests/user_requests";
+import Modal from "react-bootstrap/Modal";
 
-const AddUser = () => {
+const AddUser = ({ onClose }) => {
   const [inputs, setInputs] = useState({ name: "", password: "" });
-  const [open, setOpen] = React.useState(true);
+  console.log(onClose)
   return (
     <>
-      <Dialog open={open} onClose={() => setOpen(false)}>
+      <Dialog open={onClose} >
         <DialogTitle>New User</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -49,17 +50,15 @@ const AddUser = () => {
         <DialogActions>
           <Button
             onClick={() => {
-              setOpen(false);
-              window.location.reload();
+              onClose=false;
             }}
           >
             Abort
           </Button>
           <Button
             onClick={() => {
-              setOpen(false);
               createUser(inputs.name, inputs.password);
-              window.location.reload();
+              onClose=false;
             }}
           >
             Create
