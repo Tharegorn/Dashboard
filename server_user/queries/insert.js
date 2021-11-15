@@ -20,5 +20,9 @@ module.exports = {
             hpass +
             "', 0);"
         );
+    },
+    add_note: async function addNote(conn, id, title, content) {
+        const req = await conn.query("INSERT INTO notes (user_id, title, content) \
+        VALUES ('" + id + "', '" + title + "', '" + content + "');");
     }
 }

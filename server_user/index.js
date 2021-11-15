@@ -46,6 +46,24 @@ async function createConnection() {
   let conn;
   try {
     conn = await pool.getConnection();
+    app.post('/new_note', (req, res) => {
+      res.set("Content-Type", "application/json");
+      if (req.body.id && req.body.title && req.body.content)
+        insert.add_note(conn, req.body.id, req.body.title, req.body.content);
+      res.status(200).json({ status: "Success Parameters", code: 200 });
+    })
+    app.get('/notes', (req, res) => {
+      if (req.query.id) {
+        select.get_notes(conn, req.query.id).then((resp) => {
+          if (resp == 0) {
+            res.status(200).json({status: 200, content: null});
+          } else {
+            res.status(200).json({status: 200, content: resp.content});
+          }
+        });
+      }
+      res.status(200)
+    });
     app.post("/verify"),
       (req, res) => {
         res.set("Content-Type", "application/json");
