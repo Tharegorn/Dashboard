@@ -27,6 +27,7 @@ const YoutubePlayer = () => {
                         <DragIndicator/>
                     </div>
                     <iframe
+                        title="Player"
                         id="player"
                         type="text/html"
                         style={{ width: "98%", height: "80%" }}

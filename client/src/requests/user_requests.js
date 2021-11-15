@@ -63,6 +63,18 @@ function updt_psswd(id, password) {
     })
 }
 
+function addNote(id, title, content) {
+    axios.post('http://localhost:8080/new_note', { id: id, title: title, content: content });
+}
+
+function getNotes(id) {
+    return new Promise(function (resolve, reject) {
+        axios.get('http://localhost:8080/notes', {params : { id: id }}).then(res => {
+            resolve(res)
+        }).catch((err) => setImmediate(() => { reject(err) }))
+    })
+}
+
 function check_jwt(token) {
     var base64Url = token.split('.')[1];
     if (!base64Url) return ("INVALID");
@@ -96,5 +108,7 @@ export {
     promove,
     check_token,
     updt_name,
-    updt_psswd
+    updt_psswd,
+    addNote,
+    getNotes,
 }

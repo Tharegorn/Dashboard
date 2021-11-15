@@ -7,10 +7,13 @@ import Layout from "../_layouts/Home";
 import "./home.css";
 import { useDispatch } from "react-redux";
 import { startVideoPlayer } from "../../actions/layout";
+import AddNote from "../../components/AddNote";
+import Notes from "../../components/Notes";
 function Home() {
   const dispatch = useDispatch();
   const [compos, setComp] = useState([]);
   const [redir, setRedir] = useState();
+  const [note, setNote] = useState(false);
   const Widgets = compos.map((n, index) => (
     <div className="unique" key={index.toString()} id={index}>
       {n}
@@ -21,6 +24,9 @@ function Home() {
       ...compos,
       <Elem key={compos.length.toString()} id={compos.length} />,
     ]);
+  }
+  function getter() {
+    // getNotes(jwt_decode(localStorage.getItem("session_id")).id)
   }
   var token = localStorage.getItem("session_id");
   check_token(token)
@@ -47,12 +53,17 @@ function Home() {
             );
           }}
         ></TextField>
-        <Button variant="contained" color="primary">
-           Create a new Note
+        <Button variant="contained" color="primary" onClick={() => { setNote(true) }}>
+          Create a new Note
         </Button>
+        <Button onClick={() => {
+          getter()
+        }}>Load</Button>
+        {note ? <AddNote onClose={note} setClose={setNote} /> : <></>}
         <div className="compo">{Widgets}</div>
+        <Notes/>
         <Layout />
-      </div>
+      </div >
     );
   } else {
     return (

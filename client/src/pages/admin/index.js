@@ -100,7 +100,7 @@ function Admin() {
   if (res === false) return <Redirect to="/" />;
   return (
     <>
-      {visibility ? <AddUser onClose={true}/> : <></>}
+      {visibility ? <AddUser onClose={visibility} setClose={setVisibility}/>: <></>}
 
       <div>
         <div>
