@@ -25,22 +25,29 @@ function Notes() {
         Refresh
       </div>
       {notes ? (
-        <ul>
+        <ul className="list">
           {notes.map((item, index) => (
             <Draggable key={index} handle=".handle">
               <li className="handle">
                 <div className="card">
                   <h2
+                    className="title"
                     contentEditable
                     onInput={(e) => {
-                        console.log(e.target.childNodes[0], item.id, "title")
+                      console.log(e.target.childNodes[0], item.id, "title");
                     }}
                   >
                     {item.title}
                   </h2>
-                  <p contentEditable onInput={(e) => {
-                        console.log(e.target.childNodes[0], item.id, "content")
-                    }}>{item.content}</p>
+                  <p
+                    className="content"
+                    contentEditable
+                    onInput={(e) => {
+                      console.log(e.target.childNodes[0], item.id, "content");
+                    }}
+                  >
+                    {item.content}
+                  </p>
                 </div>
               </li>
             </Draggable>
