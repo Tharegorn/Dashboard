@@ -7,9 +7,9 @@ const jwt = require("jsonwebtoken");
 
 const select = require("./queries/select");
 const del = require("./queries/delete");
-const insert = require("./queries/insert")
-const update = require("./queries/update")
-
+const insert = require("./queries/insert");
+const update = require("./queries/update");
+const { Delete } = require("./queries/delete");
 
 const pool = mariadb.createPool({
   host: "db",
@@ -46,23 +46,40 @@ async function createConnection() {
   let conn;
   try {
     conn = await pool.getConnection();
-    app.post('/new_note', (req, res) => {
+    app.post("/new_note", (req, res) => {
       res.set("Content-Type", "application/json");
       if (req.body.id && req.body.title && req.body.content)
         insert.add_note(conn, req.body.id, req.body.title, req.body.content);
       res.status(200).json({ status: "Success Parameters", code: 200 });
-    })
-    app.get('/notes', (req, res) => {
+    });
+    app.get("/notes", (req, res) => {
       if (req.query.id) {
         select.get_notes(conn, req.query.id).then((resp) => {
           if (resp == 0) {
-            res.status(200).json({status: 200, content: null});
+            res.status(200).json({ status: 200, content: null });
           } else {
-            res.status(200).json({status: 200, content: resp.content});
+            res.status(200).json({ status: 200, content: resp.content });
           }
         });
       }
-      res.status(200)
+      res.status(200);
+    });
+    app.post("/update_note", (req, res) => {
+      if (req.body.id) {
+        if (req.body.title) {
+          update.note_title_updt(conn, req.body.id, req.body.title);
+          res.status(200).json({ status: "Success", code: 200 });
+        } else if (req.body.content) {
+          update.note_content_updt(conn, req.body.id, req.body.content);
+          res.status(200).json({ status: "Success", code: 200 });
+        } else res.status(500).json({ status: "Failure", code: 500 });
+      } else res.status(500).json({ status: "Failure", code: 500 });
+    });
+    app.post("/delete_note", (req, res) => {
+      if (req.body.id) {
+        del.Delete_note(conn, req.body.id);
+        res.status(200).json({ status: "Success", code: 200 });
+      } else res.status(500).json({ status: "Failure", code: 500 });
     });
     app.post("/verify"),
       (req, res) => {
@@ -70,28 +87,35 @@ async function createConnection() {
       };
     app.post("/login", (req, res) => {
       res.set("Content-Type", "application/json");
-      select.getInfoWithMdp(conn, req.body.name, req.body.pass).then((response) => {
-        if (response.code === 0) {
-          const rdm = token_gen(25);
-          insert.addToken(conn, rdm, response.id);
-          const token = jwt.sign(
-            { id: response.id, name: response.name, token: rdm, perm: response.perm },
-            process.env.JWT_TOKEN,
-            {}
-          );
-          res.status(200).json({
-            status: "success",
-            code: 200,
-            data: { message: "Created", token: token },
-          });
-        } else {
-          res.status(500).json({
-            status: "failure",
-            code: 500,
-            data: { message: "Invalid credentials" },
-          });
-        }
-      });
+      select
+        .getInfoWithMdp(conn, req.body.name, req.body.pass)
+        .then((response) => {
+          if (response.code === 0) {
+            const rdm = token_gen(25);
+            insert.addToken(conn, rdm, response.id);
+            const token = jwt.sign(
+              {
+                id: response.id,
+                name: response.name,
+                token: rdm,
+                perm: response.perm,
+              },
+              process.env.JWT_TOKEN,
+              {}
+            );
+            res.status(200).json({
+              status: "success",
+              code: 200,
+              data: { message: "Created", token: token },
+            });
+          } else {
+            res.status(500).json({
+              status: "failure",
+              code: 500,
+              data: { message: "Invalid credentials" },
+            });
+          }
+        });
     });
     app.post("/register", (req, res) => {
       res.set("Content-Type", "application/json");
@@ -137,17 +161,15 @@ async function createConnection() {
       if (req.body.id && req.body.password) {
         update.update(conn, null, req.body.password, req.body.id);
         res.status(200).json({ status: "Success", code: 200 });
-      } else
-        res.status(500).json({ status: "Missing Credentials", code: 500 })
-    })
+      } else res.status(500).json({ status: "Missing Credentials", code: 500 });
+    });
     app.post("/update/name", (req, res) => {
       res.set("Content-Type", "application/json");
       if (req.body.id && req.body.name) {
         update.update(conn, req.body.name, null, req.body.id);
         res.status(200).json({ status: "Success", code: 200 });
-      } else
-        res.status(500).json({ status: "Missing Credentials", code: 500 })
-    })
+      } else res.status(500).json({ status: "Missing Credentials", code: 500 });
+    });
     app.post("/token", (req, res) => {
       res.set("Content-Type", "application/json");
       if (req.body.token) {
@@ -182,7 +204,7 @@ async function createConnection() {
     throw err;
   }
   app.get("/about.json", (req, res) => {
-    res.send("Salut")
-  })
+    res.send("Salut");
+  });
 }
 createConnection();
