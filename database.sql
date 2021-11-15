@@ -24,4 +24,15 @@ CREATE TABLE `tokens` (
   FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
   );
 
+CREATE TABLE `notes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` varchar(5000) NOT NULL,
+  `added_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
+);
+
+
 COMMIT;

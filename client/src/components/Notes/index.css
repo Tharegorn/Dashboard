@@ -1,0 +1,59 @@
+.title {
+    font-weight: bold;
+    font-size: 2rem;
+}
+.content {
+    font-family: "Reenie Beanie";
+    font-size: 30px;
+}
+.list,
+.handle {
+    list-style: none;
+}
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.list .handle .card {
+    text-decoration: none;
+    color: #000;
+    background: #ffc;
+    display: block;
+    height: 80%;
+    width: 100%;
+    padding: 1em;
+    box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
+    transform: rotate(-6deg);
+    transition: transform 0.15s linear;
+}
+
+.list .handle:nth-child(even) .card {
+    transform: rotate(4deg);
+    position: relative;
+    top: 5px;
+    background: #cfc;
+}
+.list .handle:nth-child(3n) .card {
+    transform: rotate(-3deg);
+    position: relative;
+    top: -5px;
+    background: #ccf;
+}
+.list .handle:nth-child(5n) .card {
+    transform: rotate(5deg);
+    position: relative;
+    top: -10px;
+}
+
+.list .handle .card:hover,
+.list .handle .card:focus {
+    box-shadow: 10px 10px 7px rgba(0, 0, 0, 0.7);
+    transform: scale(1.25);
+    position: relative;
+    z-index: 5;
+}
+
+.list .handle {
+    margin: 1em;
+}

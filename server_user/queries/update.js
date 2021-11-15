@@ -8,5 +8,15 @@ module.exports = {
         } else {
             const req = await conn.query("UPDATE users SET name='" + name + "' WHERE id='" + id + "';")
         }
+    },
+    note_title_updt: async function updt(conn, id, title) {
+        if (title != "") {
+            await conn.query("UPDATE notes SET title='" + title + "' WHERE id='" + id + "';");
+        }
+    },
+    note_content_updt: async function updt(conn, id, content) {
+        if (content != "") {
+            await conn.query("UPDATE notes SET content='" + content + "' WHERE id='" + id + "';");
+        }
     }
 }

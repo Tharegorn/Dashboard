@@ -10,12 +10,11 @@ import {
 } from "@material-ui/core";
 import { createUser } from "../../requests/user_requests";
 
-const AddUser = () => {
+function AddUser(props) {
   const [inputs, setInputs] = useState({ name: "", password: "" });
-  const [open, setOpen] = React.useState(true);
   return (
     <>
-      <Dialog open={open} onClose={() => setOpen(false)}>
+      <Dialog open={props.onClose} >
         <DialogTitle>New User</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -49,17 +48,15 @@ const AddUser = () => {
         <DialogActions>
           <Button
             onClick={() => {
-              setOpen(false);
-              window.location.reload();
+              props.setClose(false)
             }}
           >
             Abort
           </Button>
           <Button
             onClick={() => {
-              setOpen(false);
               createUser(inputs.name, inputs.password);
-              window.location.reload();
+              props.setClose(false)
             }}
           >
             Create

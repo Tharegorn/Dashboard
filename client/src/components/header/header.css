@@ -1,14 +1,74 @@
-header{
-	padding:1px 0px;
+header {
+	padding: 1px 0px;
 	/* background: rgb(185, 222, 224); */
-	text-align:center;
+	text-align: center;
 }
 
 .div_ul_hor {
-    /* background-color:#eeeeee; */
-    display:inline;    
-}
-.ul_hor li{
-	float: right;
+	/* background-color:#eeeeee; */
 	display: inline;
+}
+.ul_hor .handle {
+	float: center;
+	display: inline;
+}
+/* .ul_hor .handle {
+	margin: 1em;
+	background-color: blue;
+	color: white;
+} */
+
+.ul_hor .handle {
+	text-decoration: none;
+	color: inherit;
+}
+
+.ul_hor .handle {
+	position: relative;
+	margin: auto;
+	padding: 19px 22px;
+	transition: all 0.2s ease;
+}
+.ul_hor .handle:before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: block;
+	border-radius: 28px;
+	background: rgba(255, 171, 157, 0.5);
+	width: 56px;
+	height: 56px;
+	transition: all 0.3s ease;
+}
+.ul_hor .handle span {
+	position: relative;
+	font-size: 16px;
+	line-height: 18px;
+	font-weight: 900;
+	letter-spacing: 0.25em;
+	text-transform: uppercase;
+	vertical-align: middle;
+}
+.ul_hor .handle svg {
+	position: relative;
+	top: 0;
+	margin-left: 10px;
+	fill: none;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke: #111;
+	stroke-width: 2;
+	transform: translateX(-5px);
+	transition: all 0.3s ease;
+}
+.ul_hor .handle:hover:before {
+	width: 100%;
+	background: #ffab9d;
+}
+.ul_hor .handle:hover svg {
+	transform: translateX(0);
+}
+.ul_hor .handle:active {
+	transform: scale(0.96);
 }

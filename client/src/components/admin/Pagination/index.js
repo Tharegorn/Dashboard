@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import Pagination from "react-bootstrap/Pagination";
-
+import Pagination from "react-bootstrap/Pagination"
 const PaginationComponent = ({
     total = 0,
     itemsPerPage = 10,
@@ -30,10 +29,9 @@ const PaginationComponent = ({
         }
 
         return pages;
-    }, [totalPages, currentPage]);
+    }, [totalPages, currentPage, onPageChange]);
 
     if (totalPages === 0) return null;
-
     return (
         <Pagination>
             <Pagination.Prev

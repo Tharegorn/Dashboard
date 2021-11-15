@@ -59,6 +59,13 @@ module.exports = {
         if (req[0]) return (result = await Promise.resolve(0));
         else return (result = await Promise.resolve(1));
     },
-
+    get_notes: async function getNotes(conn, id) {
+        const req = await conn.query("SELECT id, title, content FROM notes WHERE user_id = '" + id +"';")
+        if (req.length > 0) {
+            return await Promise.resolve({content : req})
+        } else {
+            return await Promise.resolve(0);
+        }
+    }
 
 }
