@@ -9,8 +9,7 @@ const select = require("./queries/select");
 const del = require("./queries/delete");
 const insert = require("./queries/insert");
 const update = require("./queries/update");
-const { Delete } = require("./queries/delete");
-
+const about = require("./data")
 const pool = mariadb.createPool({
   host: "db",
   database: "user_db",
@@ -204,7 +203,11 @@ async function createConnection() {
     throw err;
   }
   app.get("/about.json", (req, res) => {
-    res.send("Salut");
+    require('dns').lookup(require('os').hostname(), function (err, add, fam) {
+      about.json.client.host = "" + add + "";
+    })
+    about.json.server.current_time = Date.now();
+    res.json(about.json);
   });
 }
 createConnection();
