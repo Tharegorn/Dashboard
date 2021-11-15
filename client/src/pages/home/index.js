@@ -25,9 +25,6 @@ function Home() {
       <Elem key={compos.length.toString()} id={compos.length} />,
     ]);
   }
-  function getter() {
-    // getNotes(jwt_decode(localStorage.getItem("session_id")).id)
-  }
   var token = localStorage.getItem("session_id");
   check_token(token)
     .then((res) => {
@@ -53,17 +50,20 @@ function Home() {
             );
           }}
         ></TextField>
-        <Button variant="contained" color="primary" onClick={() => { setNote(true) }}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            setNote(true);
+          }}
+        >
           Create a new Note
         </Button>
-        <Button onClick={() => {
-          getter()
-        }}>Load</Button>
         {note ? <AddNote onClose={note} setClose={setNote} /> : <></>}
         <div className="compo">{Widgets}</div>
-        <Notes/>
+        <Notes />
         <Layout />
-      </div >
+      </div>
     );
   } else {
     return (
