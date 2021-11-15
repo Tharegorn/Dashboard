@@ -24,7 +24,6 @@ import "react-resizable/css/styles.css";
 import Weather from "../weather/weather.js";
 import Youtube from "../youtube/youtube.js";
 import Currency from "../currency/currency";
-import { DragIndicator } from "@material-ui/icons";
 
 const useStyles = makeStyles({
   root: {
