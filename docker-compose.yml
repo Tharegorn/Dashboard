@@ -12,7 +12,8 @@ services:
     build:        
       context: ./server_user
     environment:
-      JWT_TOKEN: test
+      ACCESS_TOKEN_SECRET: AZEAZEAZE
+      REFRESH_TOKEN_SECRET: AZEAZEAZE
     links:
       - db:database
     depends_on:
