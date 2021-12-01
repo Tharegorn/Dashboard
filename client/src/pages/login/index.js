@@ -30,6 +30,7 @@ function Login() {
       .then((response) => {
         setError(false);
         localStorage.setItem("session_id", response.data.token);
+        localStorage.setItem("session_id_refresh", response.data.refreshToken);
         setRegis(true);
       }).catch((err) => {
         setError(true);

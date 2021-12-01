@@ -62,7 +62,6 @@ exports.refreshToken = async function (req, res) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
     if (!token) return res.status(401).json({ status: "Unauthorized, please provide a token", code: 401 });
-
     jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, async function (err, user) {
         if (err) res.status(401).json({ status: "Unauthorized, invalid Token", code: 401 });
         else {
