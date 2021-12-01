@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { getNotes } from "../../requests/user_requests";
-import jwt_decode from "jwt-decode";
 import "./index.css";
 import Draggable from "react-draggable";
 import {
@@ -13,12 +12,12 @@ import { Delete } from "@material-ui/icons";
 function Notes() {
   const [notes, setNotes] = useState(null);
   function retrieve() {
-    getNotes(jwt_decode(localStorage.getItem("session_id")).id).then((res) => {
+    getNotes(localStorage.getItem("session_id")).then((res) => {
       setNotes(res.data.content);
     });
   }
   function retrieve_delete() {
-    getNotes(jwt_decode(localStorage.getItem("session_id")).id).then((res) => {
+    getNotes(localStorage.getItem("session_id")).then((res) => {
       setNotes(null);
       setNotes(res.data.content);
     });
@@ -39,7 +38,7 @@ function Notes() {
                     contentEditable
                     suppressContentEditableWarning={true}
                     onInput={(e) => {
-                      update_note_title(item.id, e.target.childNodes[0].data);
+                      update_note_title(item.id, e.target.childNodes[0].data, localStorage.getItem("session_id"));
                     }}
                   >
                     {item.title}
@@ -49,14 +48,14 @@ function Notes() {
                     className="content"
                     contentEditable
                     onInput={(e) => {
-                      update_note_content(item.id, e.target.childNodes[0].data);
+                      update_note_content(item.id, e.target.childNodes[0].data, localStorage.getItem("session_id"));
                     }}
                   >
                     {item.content}
                   </p>
                   <Delete
                     onClick={() => {
-                      delete_note(item.id);
+                      delete_note(item.id, localStorage.getItem("session_id"));
                       retrieve_delete();
                     }}
                   />

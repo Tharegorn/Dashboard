@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router";
-import { check_token } from "../../requests/user_requests";
 import { GitHub } from "@material-ui/icons";
 import { Button, TextField } from "@material-ui/core";
-import {updt_name, updt_psswd} from "../../requests/user_requests"
-import jwt_decode from "jwt-decode";
+import { updt_name, updt_psswd, get_access } from "../../requests/user_requests"
 function Account() {
     const [redir, setRedir] = useState();
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     useEffect(() => {
-        var token = localStorage.getItem("session_id");
-        check_token(token).then((res) => {
+        get_access(localStorage.getItem("session_id"), "/account").then((res) => {
             setRedir(true);
         }).catch((err) => {
             localStorage.removeItem("session_id");
@@ -54,7 +51,7 @@ function Account() {
                         setName(e.target.value)
                     }
                 />
-                <Button color="success" variant="contained" onClick={() => updt_name(jwt_decode(localStorage.getItem("session_id")).id, name)}>Save</Button>
+                <Button color="success" variant="contained" onClick={() => updt_name(name, localStorage.getItem("session_id"))}>Save</Button>
             </form>
             <form>
                 <TextField
@@ -66,7 +63,7 @@ function Account() {
                     variant="standard"
                     onChange={(e) => { setPassword(e.target.value) }}
                 />
-                <Button color="success" variant="contained" onClick={() => updt_psswd(jwt_decode(localStorage.getItem("session_id")).id, password)}>Save</Button>
+                <Button color="success" variant="contained" onClick={() => updt_psswd(password, localStorage.getItem("session_id"))}>Save</Button>
             </form>
         </div>
         )

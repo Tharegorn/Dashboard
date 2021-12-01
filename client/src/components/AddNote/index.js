@@ -8,7 +8,6 @@ import {
     DialogContentText,
     DialogTitle,
 } from "@material-ui/core";
-import jwt_decode from "jwt-decode"
 import { addNote } from "../../requests/user_requests"
 
 function AddNote(props) {
@@ -57,7 +56,7 @@ function AddNote(props) {
                     <Button
                         onClick={() => {
                             
-                            addNote(jwt_decode(localStorage.getItem("session_id")).id, inputs.title.replace("'", " "), inputs.content.replace("'", " "))
+                            addNote(inputs.title.replace("'", " "), inputs.content.replace("'", " "), localStorage.getItem("session_id"))
                             props.setClose(false)
                         }}
                     >

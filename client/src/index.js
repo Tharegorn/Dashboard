@@ -12,6 +12,10 @@ import thunk from "redux-thunk";
 let createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 let store = createStoreWithMiddleware(reducers);
 
+// setInterval(() => {
+// console.log("qsd")
+// }, 3000);
+
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>

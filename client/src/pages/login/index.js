@@ -29,12 +29,11 @@ function Login() {
     loginUser(user, pass)
       .then((response) => {
         setError(false);
-        localStorage.setItem("session_id", response.data.data.token);
+        localStorage.setItem("session_id", response.data.token);
         setRegis(true);
-      })
-      .catch((err) => {
+      }).catch((err) => {
         setError(true);
-        setHelp("Problème");
+        setHelp(err.response.data.status)
       });
   }
   if (regis === true) {

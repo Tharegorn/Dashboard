@@ -1,25 +1,28 @@
 import React, { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
-import { check_token } from "../../requests/user_requests";
+import { get_access } from "../../requests/user_requests";
 import "./header.css";
+import { useLocation } from 'react-router-dom'
 
-function Header(props) {
+function Header() {
   const [redir, setRedir] = useState(false);
 
   function LogOut() {
     localStorage.removeItem("session_id");
     window.location.reload();
   }
+  const location = useLocation();
+
+  function check_access() {
+    get_access(localStorage.getItem("session_id"), location.pathname).then(() => {
+      setRedir(true)
+    }).catch(() => {
+      setRedir(false)
+    })
+  }
+
   useEffect(() => {
-    var token = localStorage.getItem("session_id");
-    check_token(token)
-      .then((res) => {
-        setRedir(true);
-      })
-      .catch((err) => {
-        localStorage.removeItem("session_id");
-        setRedir(false);
-      });
+    check_access();
   }, []);
   if (redir === true) {
     return (

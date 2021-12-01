@@ -15,7 +15,7 @@ const Header = ({ headers, onSorting }) => {
     };
 
     return (
-        <thead class="container">
+        <thead className="container">
             <tr>
                 {headers.map(({ name, field, sortable }) => (
                     <th
@@ -25,16 +25,6 @@ const Header = ({ headers, onSorting }) => {
                         }
                     >
                         {name}
-
-                        {/* {sortingField && sortingField === field && (
-                            <FontAwesomeIcon
-                                icon={
-                                    sortingOrder === "asc"
-                                        ? "arrow-down"
-                                        : "arrow-up"
-                                }
-                            />
-                        )} */}
                     </th>
                 ))}
             </tr>

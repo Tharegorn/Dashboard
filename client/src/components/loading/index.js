@@ -2,7 +2,7 @@ import React from "react"
 import './index.css'
 function Spin() {
     return (
-        <div class="spin"></div>
+        <div className="spin"></div>
     )
 
 }

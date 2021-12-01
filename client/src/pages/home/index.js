@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import { TextField } from "@material-ui/core";
 import Elem from "../../components/card";
-import { check_token } from "../../requests/user_requests";
 import Layout from "../_layouts/Home";
 import "./home.css";
 import { useDispatch } from "react-redux";
 import { startVideoPlayer } from "../../actions/layout";
 import AddNote from "../../components/AddNote";
 import Notes from "../../components/Notes";
+import { get_access } from "../../requests/user_requests";
 function Home() {
   const dispatch = useDispatch();
   const [compos, setComp] = useState([]);
@@ -26,11 +26,9 @@ function Home() {
     ]);
   }
   var token = localStorage.getItem("session_id");
-  check_token(token)
-    .then((res) => {
-      setRedir(true);
-    })
-    .catch((err) => {
+  get_access(token, "/").then((res) => {
+    setRedir(true);
+  }).catch((err) => {
       localStorage.removeItem("session_id");
       setRedir(false);
     });
@@ -68,15 +66,15 @@ function Home() {
   } else {
     return (
       <div className="login">
-        <h1>Blue or red ?</h1>
-        <div className="textb"></div>
-        <div className="textb"></div>
-        <Button variant="contained" color="primary" href="/register">
-          Register
-        </Button>
-        <Button variant="contained" color="secondary" href="/login">
-          Login
-        </Button>
+        <h1>
+          <Button variant="contained" color="primary" href="/register">
+            Register
+          </Button>
+          or
+          <Button variant="contained" color="secondary" href="/login">
+            Login
+          </Button>?
+        </h1>
       </div>
     );
   }

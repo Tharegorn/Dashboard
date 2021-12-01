@@ -25,25 +25,19 @@ function Register() {
     }
     if (pass === "" || cpass === "") {
       setError(true);
-      setHelp("Password can't be empty !");
+      setHelp("Passwords can't be empty !");
       return;
     }
-    if (cpass !== pass) {
-      setError(true);
-      setHelp("Password and confirm password must be the sames !");
-      return;
-    }
-    createUser(user, pass)
+    createUser(user, pass, cpass)
       .then((res) => {
+        setHelp("")
         setError(false);
         setRegis(true);
       })
-      .catch((err) =>
-        setImmediate(() => {
-          setError(true);
-          setHelp("Le nom d'utilisateur existe déjà !");
-        })
-      );
+      .catch((err) => {
+        setError(true);
+        setHelp(err.response.data.status);
+      });
   }
   if (regis === true) return <Redirect to="/" />;
   return (

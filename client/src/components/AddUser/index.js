@@ -55,7 +55,7 @@ function AddUser(props) {
           </Button>
           <Button
             onClick={() => {
-              createUser(inputs.name, inputs.password);
+              createUser(inputs.name, inputs.password, inputs.password);
               props.setClose(false)
             }}
           >

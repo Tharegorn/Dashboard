@@ -18,25 +18,20 @@ const YoutubePlayer = () => {
         <Draggable handle=".handle">
             <div className="custom-youtube-player">
                 <ResizableBox width={450} height={300}>
-                    <div
-                        onClick={() => dispatch(stopVideoPlayer())}
-                    >
-                        <Close/>
-                    </div>
-                    <div className="handle">
-                        <DragIndicator/>
-                    </div>
-                    <iframe
-                        title="Player"
-                        id="player"
-                        type="text/html"
-                        style={{ width: "98%", height: "80%" }}
-                        src={`https://www.youtube.com/embed/${videoPlayer.video}`}
-                        frameborder="0"
-                    ></iframe>
-
-
-                    
+                        <div onClick={() => dispatch(stopVideoPlayer())}>
+                            <Close />
+                        </div>
+                        <div className="handle">
+                            <DragIndicator />
+                        </div>
+                        <iframe
+                            title="Player"
+                            id="player"
+                            type="text/html"
+                            style={{ width: "98%", height: "80%" }}
+                            src={`https://www.youtube.com/embed/${videoPlayer.video}`}
+                            frameBorder="0"
+                        />
                 </ResizableBox>
             </div>
         </Draggable>
