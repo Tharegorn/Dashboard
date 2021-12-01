@@ -1,13 +1,6 @@
 version: "3"
 
 services:
-  front_service:
-    build:
-      context: ./client/
-    depends_on:
-      - user_api
-    ports:
-      - 80:80
   widgets_api:
     build:
       context: ./apis/
@@ -19,7 +12,8 @@ services:
     build:        
       context: ./server_user
     environment:
-      JWT_TOKEN: test
+      ACCESS_TOKEN_SECRET: AZEAZEAZE
+      REFRESH_TOKEN_SECRET: AZEAZEAZE
     links:
       - db:database
     depends_on:

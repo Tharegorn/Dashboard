@@ -1,6 +1,13 @@
 version: "3"
 
 services:
+  front_service:
+    build:
+      context: ./client/
+    depends_on:
+      - user_api
+    ports:
+      - 80:80
   widgets_api:
     build:
       context: ./apis/
