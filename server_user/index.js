@@ -5,6 +5,7 @@ const app = express();
 const about = require("./data")
 const users = require("./users/index")
 const notes = require("./notes/index");
+const widgets = require("./widgets/index")
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -47,3 +48,4 @@ app.get("/about.json", (req, res) => {
   about.json.server.current_time = Date.now();
   res.json(about.json);
 });
+app.get("/user_widgets", widgets.get_user_widgets);
