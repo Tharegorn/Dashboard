@@ -1,15 +1,7 @@
-const mariadb = require("mariadb")
-
-const pool = mariadb.createPool({
-    host: "db",
-    database: "user_db",
-    user: "user",
-    password: "test",
-    connectionLimit: 10,
-});
+const pool = require("../db/index")
 
 exports.get_user_widgets = async function (req, res) {
-    let conn = await pool.getConnection()
+    let conn = await db.pool.getConnection()
 
     const youtube = await conn.query("SELECT id, channel FROM youtube WHERE user_id='1';")
     const currency = await conn.query("SELECT id FROM currency WHERE user_id='1';")

@@ -4,6 +4,7 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `auth_epitech` varchar(45),
   `perm` int(1) NOT NULL,
   `added_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;

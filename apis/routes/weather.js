@@ -1,19 +1,18 @@
 var axios = require("axios").default;
 const express = require("express");
 const rooter = express.Router()
+const key = "9478992d291326ad91f980d7b893025f"
+
 
 function options(c) {
     return ({
         method: 'GET',
-        url: 'https://community-open-weather-map.p.rapidapi.com/weather',
+        url: 'https://api.openweathermap.org/data/2.5/weather',
         params: {
             q: c,
-            lang: 'en_en',
-            units: 'metric',
-        },
-        headers: {
-            'x-rapidapi-key': '990cf10511msh64a893edd2e1083p145fb6jsn72ba086c0b1a',
-            'x-rapidapi-host': 'community-open-weather-map.p.rapidapi.com'
+            appid: key,
+            units: "metric",
+            lang: "fr"
         }
     })
 }
