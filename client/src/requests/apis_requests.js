@@ -16,9 +16,9 @@ function getWeather(city) {
     })
 }
 
-function getChannel(channel) {
+function getChannel(channel, token) {
     return new Promise(function (resolve, reject) {
-        axios.post('http://localhost:4244/youtube', { channel: channel }).then(res => {
+        axios.get('http://localhost:8080/widget/youtube/channel?channel=' + channel, { headers: {'authorization': "Bearer " + token} }).then(res => {
             resolve(res);
         }).catch((err) => setImmediate(() => { reject(err) }))
     })

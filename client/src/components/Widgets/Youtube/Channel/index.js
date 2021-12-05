@@ -22,7 +22,7 @@ function YoutubeChannel() {
         }}
         onKeyPress={(e) => {if (e.key === "Enter") {
           if (channel !== null && channel.length > 0)
-            getChannel(channel).then((res) => {
+            getChannel(channel, localStorage.getItem("session_id")).then((res) => {
               setStats({id: res.data.id, name: res.data.name, subs: res.data.subs, thumbnail: res.data.thumbnail, url: res.data.url, vids: res.data.vids, views: res.data.views, video: res.data.video})
             }).catch((err) => {
               throw err

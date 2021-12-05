@@ -20,14 +20,14 @@ exports.get_profile = function (req, resd) {
     else {
         axios.get("https://intra.epitech.eu/" + req.user.auth_epitech + "/user/?format=json").then((res) => {
             resd.status(200).json({
-                Email: res.data.login,
-                First: res.data.fistname,
-                Last: res.data.lastname,
-                City: res.data.location,
-                Picture: "https://intra.epitech.eu/" + req.user.auth_epitech + res.data.picture,
-                Credits: res.data.credits,
-                Promo: res.data.promo,
-                Gpa: res.data.gpa[0].gpa
+                email: res.data.login,
+                first: res.data.firstname,
+                last: res.data.lastname,
+                vity: res.data.location,
+                picture: "https://intra.epitech.eu/" + req.user.auth_epitech + res.data.picture,
+                credits: res.data.credits,
+                promo: res.data.promo,
+                gpa: res.data.gpa[0].gpa
             })
         }).catch((err) => {
             resd.status(401).json({ status: "Unauthorized", code: 401 });

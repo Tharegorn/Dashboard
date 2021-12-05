@@ -7,6 +7,7 @@ const users = require("./users/index")
 const notes = require("./notes/index");
 const widgets = require("./widgets/index")
 const epitech = require("./epitech/index")
+const youtube = require("./youtube/index")
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -45,6 +46,7 @@ app.get("/users", users.adminMiddleware, users.loadUsers);
 app.get("/routes", users.userMiddleware, users.access_routes);
 app.get("/note", users.userMiddleware, notes.get_notes)
 app.get("/epitech/profile", users.userMiddleware, epitech.get_profile)
+app.get("/widget/youtube/channel", users.userMiddleware, youtube.channel)
 app.get("/about.json", (req, res) => {
 
   about.json.client.host = req.hostname;
