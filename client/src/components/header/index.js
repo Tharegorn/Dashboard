@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import jwt_decode from "jwt-decode";
 import { get_access } from "../../requests/user_requests";
 import "./header.css";
 import { useLocation } from 'react-router-dom'

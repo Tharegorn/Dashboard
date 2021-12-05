@@ -5,23 +5,30 @@ function EpitechProfile() {
   useEffect(() => {
     getProfile(localStorage.getItem("session_id"))
       .then((res) => {
-        setData(res.data)
+        setData(res.data);
       })
       .catch((err) => {
-        console.log(err.response);
+        throw err;
       });
   }, []);
   return (
-  <div>
-    Epitech Profile
-    {data ?<div>
-      {data.first}
-      {data.last}
-      <img src={data.picture} alt="profile picture" />
-      {data.gpa}
-      {data.promo}{data.credits}{data.email}
-    </div>: <></>}
-    </div>);
+    <div>
+      Epitech Profile
+      {data ? (
+        <div>
+          {data.first}
+          {data.last}
+          <img src={data.picture} alt={data.first + " " + data.last} />
+          {data.gpa}
+          {data.promo}
+          {data.credits}
+          {data.email}
+        </div>
+      ) : (
+        <></>
+      )}
+    </div>
+  );
 }
 
 export default EpitechProfile;

@@ -9,6 +9,7 @@ const widgets = require("./widgets/index")
 const epitech = require("./epitech/index")
 const youtube = require("./youtube/index")
 const currency = require("./currency/index")
+const weather = require("./weather/index")
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -50,6 +51,7 @@ app.get("/epitech/profile", users.userMiddleware, epitech.get_profile)
 app.get("/widget/youtube/channel", users.userMiddleware, youtube.channel)
 app.get("/widget/currency/exchange", users.userMiddleware, currency.exchange)
 app.get("/widget/currency/values", users.userMiddleware, currency.get_money)
+app.get("/widget/weather/city", users.userMiddleware, weather.city);
 app.get("/about.json", (req, res) => {
 
   about.json.client.host = req.hostname;

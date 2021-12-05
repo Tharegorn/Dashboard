@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-function getWeather(city) {
+function getWeather(city, token) {
     return new Promise(function (resolve, reject) {
-        axios.post('http://localhost:4244/weather', {city: city}).then(res => {
+        axios.get('http://localhost:8080/widget/weather/city?city=' + city, {headers: { 'Authorization': 'Bearer ' + token}}).then(res => {
             resolve(res);
         }).catch((err) => setImmediate(() => { reject(err) }))
     })

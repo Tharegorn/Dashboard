@@ -11,7 +11,7 @@ function getOpt(from, to, amount) {
         url: 'https://currency-converter13.p.rapidapi.com/convert',
         params: { from: from, to: to, amount: amount },
         headers: {
-            'x-rapidapi-key': '990cf10511msh64a893edd2e1083p145fb6jsn72ba086c0b1a',
+            'x-rapidapi-key': process.env.CURRENCY_KEY,
             'x-rapidapi-host': 'currency-converter13.p.rapidapi.com'
         }
     })

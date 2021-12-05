@@ -28,7 +28,7 @@ setInterval(() => {
       localStorage.setItem("session_id_refresh", response.data.refresh)
     })
     .catch(function (error) {
-      console.log(error);
+      throw error;
     });
   }
 }, 30000);

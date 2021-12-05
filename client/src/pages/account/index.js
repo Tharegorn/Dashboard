@@ -29,20 +29,6 @@ function Account() {
       <div>
         <h3>Availables Services</h3>
         <div>
-          <h3>GitHub</h3>
-          <GitHub />
-          <Button variant="contained" color="secondary">
-            Link
-          </Button>
-        </div>
-        <div>
-          <h3>Spotify</h3>
-          <GitHub />
-          <Button variant="contained" color="secondary">
-            Link
-          </Button>
-        </div>
-        <div>
           <h3>Epitech</h3>
           <GitHub />
           <Button

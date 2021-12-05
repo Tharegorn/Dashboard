@@ -1,4 +1,4 @@
-const apikey = "AIzaSyB8UFWjfK7B2SHBnsgE6yBKYYyaKj4w13g"
+const apikey = process.env.YOUTUBE_KEY
 var axios = require("axios").default;
 
 exports.channel = function (req, res) {

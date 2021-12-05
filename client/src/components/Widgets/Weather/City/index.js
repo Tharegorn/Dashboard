@@ -17,7 +17,7 @@ function WeatherCity() {
         }}
         onKeyPress={(e) => {if (e.key === "Enter") {
           if (city !== null && city.length > 0)
-            getWeather(city).then((res) => {
+            getWeather(city, localStorage.getItem("session_id")).then((res) => {
               setWeather({city: res.data.city, temp: res.data.temp, desc: res.data.desc})
             }).catch((err) => {
               throw err
