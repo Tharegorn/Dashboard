@@ -1,13 +1,5 @@
 import axios from 'axios';
 
-function getWidgets() {
-    return new Promise(function (resolve, reject) {
-        axios.post('http://localhost:4244/available').then(res => {
-            resolve(res);
-        }).catch((err) => setImmediate(() => { reject(err) }))
-    })
-}
-
 function getWeather(city) {
     return new Promise(function (resolve, reject) {
         axios.post('http://localhost:4244/weather', {city: city}).then(res => {
@@ -24,17 +16,17 @@ function getChannel(channel, token) {
     })
 }
 
-function getCurrency(data) {
+function getMoney(token) {
     return new Promise(function (resolve, reject) {
-        axios.post('http://localhost:4244/currency', { data }).then(res => {
+        axios.get('http://localhost:8080/widget/currency/values', {headers: { 'Authorization': 'Bearer ' + token}}).then(res => {
             resolve(res);
         }).catch((err) => setImmediate(() => { reject(err) }))
     })
 }
 
-function getFields(type) {
+function getCurrency(from, to, value, token) {
     return new Promise(function (resolve, reject) {
-        axios.post('http://localhost:4244/search/' + type.toLowerCase()).then(res => {
+        axios.get('http://localhost:8080/widget/currency/exchange?from=' + from + '&to=' + to + '&value=' + value, {headers: { 'Authorization': 'Bearer ' + token}}).then(res => {
             resolve(res);
         }).catch((err) => setImmediate(() => { reject(err) }))
     })
@@ -54,6 +46,5 @@ export {
     getWeather,
     getChannel,
     getCurrency,
-    getWidgets,
-    getFields,
+    getMoney,
 }
