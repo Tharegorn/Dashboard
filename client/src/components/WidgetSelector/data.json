@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "name": "Epitech Profile",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Epitech.png",
+        "alt": "EpitechLogo",
+        "type": "epitech_profile"
+    },
+    {
+        "id": 1,
+        "name": "Epitech Planning",
+        "url": "https://ags-net.com/wp-content/uploads/2020/06/planning.png",
+        "alt": "EpitechLogo",
+        "type": "epitech_planning"
+    }
+    ,
+    {
+        "id": 1,
+        "name": "Weather",
+        "url": "https://www.pngall.com/wp-content/uploads/11/Weather-No-Background.png",
+        "alt": "EpitechLogo",
+        "type": "city_weather"
+    },
+    {
+        "id": 1,
+        "name": "Youtube Channel Stats",
+        "url": "http://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c545.png",
+        "alt": "EpitechLogo",
+        "type": "channel_stats"
+    },
+    {
+        "id": 1,
+        "name": "Youtube Video Search",
+        "url": "http://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c545.png",
+        "alt": "EpitechLogo",
+        "type": "youtube_search"
+    },
+    {
+        "id": 1,
+        "name": "Youtube Player",
+        "url": "http://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c545.png",
+        "alt": "EpitechLogo",
+        "type": "youtube_player"
+    },
+    {
+        "id": 1,
+        "name": "Currency Converter",
+        "url": "https://cdn-icons-png.flaticon.com/512/39/39355.png",
+        "alt": "EpitechLogo",
+        "type": "currency_converter"
+    }
+]
