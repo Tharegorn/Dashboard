@@ -181,7 +181,17 @@ function delete_note(id, token) {
     }
   });
 }
+
+function set_autologin(auth, token) {
+  instance.post("/epitech/auth", {auth: auth}, {headers: { "authorization": "Bearer " + token }}).then((res) => {
+    localStorage.setItem("session_id", res.data.token)
+    localStorage.setItem("session_id_refresh", res.data.refresh)
+  }).catch((err) => {
+    throw err
+  })
+}
 export {
+  set_autologin,
   createUser,
   loginUser,
   loadUsers,
