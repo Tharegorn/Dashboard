@@ -8,17 +8,17 @@ function getWidgets() {
     })
 }
 
-function getWeather(data) {
+function getWeather(city) {
     return new Promise(function (resolve, reject) {
-        axios.post('http://localhost:4244/weather', { data }).then(res => {
+        axios.post('http://localhost:4244/weather', {city: city}).then(res => {
             resolve(res);
         }).catch((err) => setImmediate(() => { reject(err) }))
     })
 }
 
-function getChannel(data) {
+function getChannel(channel) {
     return new Promise(function (resolve, reject) {
-        axios.post('http://localhost:4244/youtube', { data }).then(res => {
+        axios.post('http://localhost:4244/youtube', { channel: channel }).then(res => {
             resolve(res);
         }).catch((err) => setImmediate(() => { reject(err) }))
     })
@@ -40,7 +40,17 @@ function getFields(type) {
     })
 }
 
+function getProfile(token) {
+    return new Promise(function (resolve, reject) {
+        axios.get('http://localhost:8080/epitech/profile', {headers: {'Authorization': "Bearer " + token}}).then(res => {
+            resolve(res);
+        }).catch((err) => setImmediate(() => { reject(err) }))
+    })
+}
+
+
 export {
+    getProfile,
     getWeather,
     getChannel,
     getCurrency,

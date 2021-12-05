@@ -12,15 +12,15 @@ function options(c) {
             q: c,
             appid: key,
             units: "metric",
-            lang: "fr"
+            lang: "en"
         }
     })
 }
 
 rooter.post('/weather', (req, res) => {
     res.set("Content-Type", "application/json");
-    if (req.body.data.City) {
-        axios.request(options(req.body.data.City)).then(function (rev) {
+    if (req.body.city) {
+        axios.request(options(req.body.city)).then(function (rev) {
             res.status(200).json({ status: "Succes", code: 200, city: rev.data.name, temp: rev.data.main.temp, desc: rev.data.weather[0].description })
         }).catch(function (error) {
             res.status(500).json({ status: "Failure", code: 500, msg: "Unknow City" })

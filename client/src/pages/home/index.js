@@ -1,17 +1,13 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
-import { TextField } from "@material-ui/core";
 import Widgets from "../../components/Card";
 import Layout from "../_layouts/Home";
 import "./home.css";
-import { useDispatch } from "react-redux";
-import { startVideoPlayer } from "../../actions/layout";
 import AddNote from "../../components/AddNote";
 import Notes from "../../components/Notes";
 import { get_access } from "../../requests/user_requests";
 import WidgetSelector from "../../components/WidgetSelector";
 function Home() {
-  const dispatch = useDispatch();
   const [compos, setComp] = useState([]);
   const [redir, setRedir] = useState();
   const [note, setNote] = useState(false);
@@ -39,19 +35,6 @@ function Home() {
   if (redir === true) {
     return (
       <div>
-        <Button variant="contained" color="primary" onClick={addcp}>
-          Add a new Widget
-        </Button>
-        <TextField
-          label="Paste here a youtube link"
-          onChange={(e) => {
-            e.target.value.includes("https://www.youtube.com/watch?v=") ? (
-              dispatch(startVideoPlayer(e.target.value.split("=")[1]))
-            ) : (
-              <></>
-            );
-          }}
-        ></TextField>
         <Button
           variant="contained"
           color="primary"

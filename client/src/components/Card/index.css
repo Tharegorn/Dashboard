@@ -81,4 +81,6 @@
 /* Page content */
 .content {
     padding: 10px;
+    text-align: center;
+    background: #33BBFF;
 }

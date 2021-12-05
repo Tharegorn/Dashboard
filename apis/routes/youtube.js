@@ -6,8 +6,8 @@ const rooter = express.Router()
 rooter.post('/youtube', (req, res) => {
     res.set("Content-Type", "application/json");
     var thumbnail, name, id, url, views, subs, vids;
-    if (req.body.data.Channel) {
-        axios.get("https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + req.body.data.Channel + "&type=channel&key=AIzaSyB8UFWjfK7B2SHBnsgE6yBKYYyaKj4w13g").then(function (rev) {
+    if (req.body.channel) {
+        axios.get("https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + req.body.channel + "&type=channel&key=AIzaSyB8UFWjfK7B2SHBnsgE6yBKYYyaKj4w13g").then(function (rev) {
             thumbnail = rev.data.items[0].snippet.thumbnails.default.url
             name = rev.data.items[0].snippet.title;
             id = rev.data.items[0].id.channelId;

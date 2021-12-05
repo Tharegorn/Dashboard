@@ -16,8 +16,8 @@ function getOpt(from, to, amount) {
 
 rooter.post("/currency", (req, res) => {
     res.set("Content-Type", "application/json");
-    if (req.body.data.From && req.body.data.To && req.body.data.Value) {
-        axios.request(getOpt(req.body.data.From, req.body.data.To, req.body.data.Value || 1)).then(function (response) {
+    if (req.body.from&& req.body.to && req.body.value) {
+        axios.request(getOpt(req.body.from, req.body.to, req.body.value || 1)).then(function (response) {
             res.status(200).json({ status: "Success", code: 200, amount: response.data.amount, currency: response.data.to })
         }).catch(function (error) {
             res.status(500).json({ status: "Failure", code: 500, msg: "Invalid parameters" })
