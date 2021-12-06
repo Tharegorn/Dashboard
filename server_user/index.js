@@ -5,7 +5,11 @@ const app = express();
 const about = require("./data")
 const users = require("./users/index")
 const notes = require("./notes/index");
-
+const widgets = require("./widgets/index")
+const epitech = require("./epitech/index")
+const youtube = require("./youtube/index")
+const currency = require("./currency/index")
+const weather = require("./weather/index")
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -26,6 +30,7 @@ app.listen(4242, () => {
 app.post("/login", users.login);
 app.post("/register", users.register);
 app.post("/refresh", users.refreshToken);
+app.post("/epitech/auth", users.userMiddleware, epitech.set_autologin)
   // USER PERMISSIONS HANDLING
 app.post("/promote", users.adminMiddleware, users.promote);
 app.post("/demote", users.adminMiddleware, users.demote);
@@ -42,8 +47,15 @@ app.post("/delete_note", users.userMiddleware, notes.delete_note)
 app.get("/users", users.adminMiddleware, users.loadUsers);
 app.get("/routes", users.userMiddleware, users.access_routes);
 app.get("/note", users.userMiddleware, notes.get_notes)
+app.get("/epitech/profile", users.userMiddleware, epitech.get_profile)
+app.get("/widget/youtube/channel", users.userMiddleware, youtube.channel)
+app.get("/widget/currency/exchange", users.userMiddleware, currency.exchange)
+app.get("/widget/currency/values", users.userMiddleware, currency.get_money)
+app.get("/widget/weather/city", users.userMiddleware, weather.city);
 app.get("/about.json", (req, res) => {
+
   about.json.client.host = req.hostname;
   about.json.server.current_time = Date.now();
   res.json(about.json);
 });
+app.get("/user_widgets", widgets.get_user_widgets);

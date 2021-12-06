@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import jwt_decode from "jwt-decode";
 import { get_access } from "../../requests/user_requests";
 import "./header.css";
 import { useLocation } from 'react-router-dom'
@@ -31,9 +30,6 @@ function Header() {
           <div>
             <div>
               <h1>Dashboard</h1>
-              <div>
-                Welcome {jwt_decode(localStorage.getItem("session_id")).name}
-              </div>
               <div className="div_ul_hor">
                 <ul className="ul_hor">
                   <div

@@ -1,13 +1,11 @@
-const apikey = "AIzaSyB8UFWjfK7B2SHBnsgE6yBKYYyaKj4w13g"
+const apikey = process.env.YOUTUBE_KEY
 var axios = require("axios").default;
-const express = require("express");
-const rooter = express.Router()
 
-rooter.post('/youtube', (req, res) => {
+exports.channel = function (req, res) {
     res.set("Content-Type", "application/json");
     var thumbnail, name, id, url, views, subs, vids;
-    if (req.body.data.Channel) {
-        axios.get("https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + req.body.data.Channel + "&type=channel&key=AIzaSyB8UFWjfK7B2SHBnsgE6yBKYYyaKj4w13g").then(function (rev) {
+    if (req.query.channel) {
+        axios.get("https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + req.query.channel + "&type=channel&key=AIzaSyB8UFWjfK7B2SHBnsgE6yBKYYyaKj4w13g").then(function (rev) {
             thumbnail = rev.data.items[0].snippet.thumbnails.default.url
             name = rev.data.items[0].snippet.title;
             id = rev.data.items[0].id.channelId;
@@ -30,8 +28,4 @@ rooter.post('/youtube', (req, res) => {
     } else {
         res.status(500).json({ status: "Failure", code: 500, msg: "Unknow Channel" })
     }
-});
-
-module.exports = rooter;
-
-
+};

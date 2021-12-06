@@ -1,49 +1,50 @@
 import axios from 'axios';
 
-function getWidgets() {
+function getWeather(city, token) {
     return new Promise(function (resolve, reject) {
-        axios.post('http://localhost:4244/available').then(res => {
+        axios.get('http://localhost:8080/widget/weather/city?city=' + city, {headers: { 'Authorization': 'Bearer ' + token}}).then(res => {
             resolve(res);
         }).catch((err) => setImmediate(() => { reject(err) }))
     })
 }
 
-function getWeather(data) {
+function getChannel(channel, token) {
     return new Promise(function (resolve, reject) {
-        axios.post('http://localhost:4244/weather', { data }).then(res => {
+        axios.get('http://localhost:8080/widget/youtube/channel?channel=' + channel, { headers: {'authorization': "Bearer " + token} }).then(res => {
             resolve(res);
         }).catch((err) => setImmediate(() => { reject(err) }))
     })
 }
 
-function getChannel(data) {
+function getMoney(token) {
     return new Promise(function (resolve, reject) {
-        axios.post('http://localhost:4244/youtube', { data }).then(res => {
+        axios.get('http://localhost:8080/widget/currency/values', {headers: { 'Authorization': 'Bearer ' + token}}).then(res => {
             resolve(res);
         }).catch((err) => setImmediate(() => { reject(err) }))
     })
 }
 
-function getCurrency(data) {
+function getCurrency(from, to, value, token) {
     return new Promise(function (resolve, reject) {
-        axios.post('http://localhost:4244/currency', { data }).then(res => {
+        axios.get('http://localhost:8080/widget/currency/exchange?from=' + from + '&to=' + to + '&value=' + value, {headers: { 'Authorization': 'Bearer ' + token}}).then(res => {
             resolve(res);
         }).catch((err) => setImmediate(() => { reject(err) }))
     })
 }
 
-function getFields(type) {
+function getProfile(token) {
     return new Promise(function (resolve, reject) {
-        axios.post('http://localhost:4244/search/' + type.toLowerCase()).then(res => {
+        axios.get('http://localhost:8080/epitech/profile', {headers: {'Authorization': "Bearer " + token}}).then(res => {
             resolve(res);
         }).catch((err) => setImmediate(() => { reject(err) }))
     })
 }
+
 
 export {
+    getProfile,
     getWeather,
     getChannel,
     getCurrency,
-    getWidgets,
-    getFields,
+    getMoney,
 }
