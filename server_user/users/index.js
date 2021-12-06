@@ -124,7 +124,7 @@ exports.login = async function (req, res) {
             const token = generateToken({ id: resp[0].id, name: resp[0].name, auth_epitech: resp[0].auth_epitech });
             const refresh = generateRefreshToken({ id: resp[0].id, name: resp[0].name });
             const result = await conn.query("SELECT token_id FROM tokens WHERE user_id='" + resp[0].id + "';")
-            if (!result[0]) conn.query("INSERT INTO tokens (user_id, token, refresh) VALUES ('" + resp[0].id + "', ' " + token + "', '" + refresh + "');")
+            if (!result[0]) conn.query("INSERT INTO tokens (user_id, token, refresh) VALUES ('" + resp[0].id + "', '" + token + "', '" + refresh + "');")
             else conn.query("UPDATE tokens SET token='" + token + "', refresh='" + refresh + "' WHERE user_id='" + resp[0].id + "';")
             res.status(200).json({ status: "Success", code: 200, token: token, refreshToken: refresh });
         } else res.status(401).json({ status: "Invalid Password", code: 401 });
