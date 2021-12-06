@@ -14,11 +14,11 @@ function App() {
       <Suspense fallback={<Spin />}>
         <Switch>
           {routes.map((route) => (
-              <Route
-                path={route.path}
-                component={route.component}
-                key={route.path}
-              />
+            <Route
+              path={route.path}
+              component={route.component}
+              key={route.path}
+            />
           ))}
         </Switch>
         <Route path="/" exact>
