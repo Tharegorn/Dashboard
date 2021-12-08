@@ -9,24 +9,28 @@ import "./App.css";
 
 function App() {
   return (
-    <Router>
-      <Header />
-      <Suspense fallback={<Spin />}>
-        <Switch>
-          {routes.map((route) => (
-              <Route
-                path={route.path}
-                component={route.component}
-                key={route.path}
-              />
-          ))}
-        </Switch>
-        <Route path="/" exact>
-          <Home />
-        </Route>
-      </Suspense>
-      <Footer />
-    </Router>
+    <div>
+      <Router>
+        <Header />
+        <div id="content">
+          <Suspense fallback={<Spin />}>
+            <Switch>
+              {routes.map((route) => (
+                <Route
+                  path={route.path}
+                  component={route.component}
+                  key={route.path}
+                />
+              ))}
+            </Switch>
+            <Route path="/" exact>
+              <Home />
+            </Route>
+          </Suspense>
+          <Footer />
+        </div>
+      </Router>
+    </div>
   );
 }
 

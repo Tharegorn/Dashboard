@@ -16,13 +16,10 @@ function EpitechProfile() {
       Epitech Profile
       {data ? (
         <div>
-          {data.first}
-          {data.last}
-          <img src={data.picture} alt={data.first + " " + data.last} />
-          {data.gpa}
-          {data.promo}
-          {data.credits}
-          {data.email}
+          <img src={data.picture} alt={data.first + " " + data.last} /><br/>
+          {data.first} {data.last}<br/>
+          GPA : {data.gpa} | Credits: {data.credits} <br/>
+          Promo {data.promo}
         </div>
       ) : (
         <></>

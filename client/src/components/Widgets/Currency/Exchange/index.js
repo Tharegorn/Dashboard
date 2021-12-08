@@ -13,7 +13,7 @@ function Currency_exchange() {
   }, []);
   return (
     <div>
-      Currency exchange
+      Currency exchange<br/>
       <Select
         value={values.from}
         onChange={(e) => {
@@ -33,7 +33,7 @@ function Currency_exchange() {
         ) : (
           <></>
         )}
-      </Select>
+      </Select><br/>
       <Select
         value={values.to}
         onChange={(e) => {
@@ -53,7 +53,7 @@ function Currency_exchange() {
         ) : (
           <></>
         )}
-      </Select>
+      </Select><br/>
       <TextField
         type="number"
         label="Amount"
@@ -89,6 +89,7 @@ function Currency_exchange() {
       />
       {currency ? (
         <div>
+          <br/>
           <AccountBalance />
           {currency.amount} : {currency.curr}
         </div>

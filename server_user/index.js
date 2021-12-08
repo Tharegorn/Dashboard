@@ -49,6 +49,7 @@ app.get("/routes", users.userMiddleware, users.access_routes);
 app.get("/note", users.userMiddleware, notes.get_notes)
 app.get("/epitech/profile", users.userMiddleware, epitech.get_profile)
 app.get("/widget/youtube/channel", users.userMiddleware, youtube.channel)
+app.get("/widget/youtube/search", users.userMiddleware, youtube.search)
 app.get("/widget/currency/exchange", users.userMiddleware, currency.exchange)
 app.get("/widget/currency/values", users.userMiddleware, currency.get_money)
 app.get("/widget/weather/city", users.userMiddleware, weather.city);
