@@ -1,5 +1,16 @@
 import axios from 'axios';
 
+const instance = axios.create({
+    baseURL: "http://localhost:8080/"
+  })
+
+function getSearch(value, token) {
+    return new Promise(function (resolve, reject) {
+        axios.get('http://localhost:8080/widget/youtube/search?value=' + value, { headers: {'authorization': "Bearer " + token} }).then(res => {
+            resolve(res);
+        }).catch((err) => setImmediate(() => { reject(err) }))
+    })
+}
 function getWeather(city, token) {
     return new Promise(function (resolve, reject) {
         axios.get('http://localhost:8080/widget/weather/city?city=' + city, {headers: { 'Authorization': 'Bearer ' + token}}).then(res => {
@@ -42,6 +53,7 @@ function getProfile(token) {
 
 
 export {
+    getSearch,
     getProfile,
     getWeather,
     getChannel,

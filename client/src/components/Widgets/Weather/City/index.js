@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { TextField } from "@material-ui/core";
 import {getWeather} from "../../../../requests/apis_requests"
+import { LocationCity, Description, AcUnit } from "@material-ui/icons";
+
 function WeatherCity() {
   const [city, setCity] = useState(null);
   const [weather, setWeather] = useState(null)
@@ -24,7 +26,10 @@ function WeatherCity() {
             })
         }}}
       />
-      {weather ? <div>{weather.city} {weather.temp} {weather.desc}</div>: <></>}
+      {weather ? <div><br/>
+        <LocationCity/>{weather.city}<br/>
+        <AcUnit/>{weather.temp}<br/>
+        <Description/>{weather.desc}</div>: <></>}
     </div>
   );
 }
