@@ -8,6 +8,11 @@ services:
       - user_api
     ports:
       - 80:80
+  documentation:
+    build:
+      context: ./Doc/
+    ports:
+      - 5000:80
   user_api:
     build:        
       context: ./server_user
