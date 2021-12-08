@@ -10,7 +10,7 @@ module.exports = {
           name: "Weather",
           widgets: [
             {
-              name: "city_weather",
+              name: "city",
               description: "Display the weather of the selected city",
               params: [
                 {
@@ -25,16 +25,16 @@ module.exports = {
           name: "Currency",
           widgets: [
             {
-              name: "currency_exchange",
+              name: "exchange",
               description: "Display the amount of currency",
               params: [
                 {
                   name: "from",
-                  type: "string",
+                  type: "enum",
                 },
                 {
                   name: "to",
-                  type: "string",
+                  type: "enum",
                 },
                 {
                   name: "amount",
@@ -48,7 +48,7 @@ module.exports = {
           name: "YouTube",
           widgets: [
             {
-              name: "channer_stats",
+              name: "channel_stats",
               description: "Display the stats on the selected Youtube Channel",
               params: [
                 {
@@ -58,11 +58,54 @@ module.exports = {
               ],
             },
             {
-              name: "youtube_player",
+              name: "player",
               description: "Launch a Youtube player",
               params: [
                 {
                   name: "link",
+                  type: "string",
+                },
+              ],
+            },
+            {
+              name: "search",
+              description: "Search videaos with given name",
+              params: [
+                {
+                  name: "search",
+                  type: "string",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Epitech",
+          widgets: [
+            {
+              name: "Profile",
+              description: "Display epitech profile card",
+              params: [
+                {
+                  name: "auth",
+                  type: "string",
+                }
+              ],
+            },
+          ],
+        },
+        {
+          name: "Notes",
+          widgets: [
+            {
+              name: "stick",
+              description: "Create and manage stick notes on the board",
+              params: [
+                {
+                  name: "title",
+                  type: "string",
+                },{
+                  name: "content",
                   type: "string",
                 },
               ],
